@@ -41,7 +41,8 @@
             android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="请输入用户名"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -68,7 +69,8 @@
             android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="请输入密码"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="24sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,16 +96,34 @@
             android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="请输入手机号"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textSize="24sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="226dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="注册"
-        android:textSize="34sp"
-        tools:layout_marginLeft="100dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="80dp"
+            android:text="注册"
+            android:textSize="34sp"
+              />
+
+        <Button
+            android:id="@+id/return_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="40dp"
+            android:text="返回"
+            android:textSize="34sp"
+              />
+    </LinearLayout>
 
 </LinearLayout>
