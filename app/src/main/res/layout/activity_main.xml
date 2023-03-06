@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,72 +7,57 @@
     android:background="@drawable/main"
     tools:context=".Activity.MainActivity">
 
-
-    <FrameLayout
-        android:id="@+id/linearLayout3"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/fragment_vp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@android:color/holo_purple"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabs_rg" />
 
-    </FrameLayout>
+    <RadioGroup
+        android:id="@+id/tabs_rg"
+        android:layout_width="401dp"
+        android:layout_height="66dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_marginLeft="10dp"
+        android:background="#D2F4AA"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:paddingTop="6dp"
+        android:paddingBottom="7dp">
 
-        <TextView
-            android:id="@+id/textView6"
+        <RadioButton
+            android:id="@+id/today_tab"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#CBEDB8"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="流水"
-            android:textSize="24sp" />
+            android:checked="true"
+            android:drawableTop="@drawable/tab_sign_selector"
+            android:text="今日" />
 
-        <TextView
-            android:id="@+id/textView7"
+        <RadioButton
+            android:id="@+id/record_tab"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#C5F3BA"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="记一笔"
-            android:textSize="24sp" />
+            android:drawableTop="@drawable/tab_record_selector"
+            android:text="记录" />
 
-        <TextView
-            android:id="@+id/textView9"
+        <RadioButton
+            android:id="@+id/contact_tab"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#BAEDBC"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="记账统计"
-            android:textSize="24sp" />
+            android:drawableTop="@drawable/tab_contact_selector"
+            android:text="通讯录" />
 
-        <TextView
-            android:id="@+id/textView8"
+        <RadioButton
+            android:id="@+id/settings_tab"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#CFF8D3"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="我的"
-            android:textSize="24sp" />
+            android:drawableTop="@drawable/tab_setting_selector"
+            android:text="设置" />
+    </RadioGroup>
 
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
