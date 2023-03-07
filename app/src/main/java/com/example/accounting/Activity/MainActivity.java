@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         // find view
-        mViewPager = findViewById(R.id.fragment_vp);
-        mTabRadioGroup = findViewById(R.id.tabs_rg);
+        mViewPager = findViewById(R.id.fragment_vp);  //显示区
+        mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
         // init fragment
         mFragments = new ArrayList<>(4);
-        mFragments.add(BlankFragment.newInstance("今日"));
-        mFragments.add(BlankFragment.newInstance("记录"));
-        mFragments.add(BlankFragment.newInstance("通讯录"));
-        mFragments.add(BlankFragment.newInstance("设置"));
+        mFragments.add(BlankFragment.newInstance("流水"));
+        mFragments.add(BlankFragment.newInstance("记一笔"));
+        mFragments.add(BlankFragment.newInstance("统计"));
+        mFragments.add(BlankFragment.newInstance("我的"));
         // init view pager
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);

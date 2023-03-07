@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else {
                                     Looper.prepare();
-                                    Toast.makeText(LoginActivity.this, toJsonObj.get("code")+"****"+toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             } catch (JSONException e) {
