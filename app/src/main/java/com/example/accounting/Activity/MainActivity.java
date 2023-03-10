@@ -19,9 +19,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    private RadioGroup mTabRadioGroup;
+    private RadioGroup mTabRadioGroup;  //底部导航栏
 
-    private List<Fragment> mFragments;
+    private List<Fragment> mFragments = new ArrayList<>();
     private FragmentPagerAdapter mAdapter;
 
     @Override
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.fragment_vp);  //显示区
         mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
         // init fragment
-        mFragments = new ArrayList<>(4);
+        mFragments = new ArrayList<>(4);   //显示内容
         mFragments.add(BlankFragment.newInstance("流水"));
         mFragments.add(BlankFragment.newInstance("记一笔"));
         mFragments.add(BlankFragment.newInstance("统计"));
@@ -55,20 +55,23 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.removeOnPageChangeListener(mPageChangeListener);
     }
 
+    /**
+     * 页面转换监听
+     */
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
 
         @Override
         public void onPageSelected(int position) {
-            RadioButton radioButton = (RadioButton) mTabRadioGroup.getChildAt(position);
+            RadioButton radioButton = (RadioButton) mTabRadioGroup.getChildAt(position);  //选中事件
             radioButton.setChecked(true);
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
+
+        }
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         }
     };

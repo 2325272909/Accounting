@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accounting.R;
+import com.example.accounting.utils.URL;
 
 
 import org.json.JSONException;
@@ -50,7 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://10.131.93.59:8080/user/login";
+                String temp_url = URL.url();
+                String url = "http://"+temp_url+":8080/user/login";
+                Log.i(TAG,"拼接后的url地址："+url);   //测试url拼接能否使用
                 String username = name.getText().toString().trim();
                 String userPassword = password.getText().toString().trim();
 

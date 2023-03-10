@@ -1,18 +1,35 @@
 package com.example.accounting.Activity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accounting.R;
+import com.example.accounting.utils.GenerateID;
+import com.example.accounting.utils.URL;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -25,11 +42,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        edt_userName = findViewById(R.id.edt_userName);
+        edt_userPassword = findViewById(R.id.edt_userPassword);
+        edt_userPhone = findViewById(R.id.edt_userPhone);
         register = findViewById(R.id.btn_register);
         return_login=findViewById(R.id.btn_returnLogin);
 
 
-
+        /**
+         * 返回登陆界面功能
+         */
         return_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -46,45 +68,70 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = edt_userName.getText().toString().trim();
-                String password = edt_userPassword.getText().toString().trim();
-                String phone = edt_userPhone.getText().toString().trim();
-                if(username.equals("")||password.equals("")||phone.equals("")){
-                    Toast.makeText(RegisterActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                String userName = edt_userName.getText().toString().trim();
+                String userPassword = edt_userPassword.getText().toString().trim();
+                String userPhone = edt_userPhone.getText().toString().trim();
+                if(userName.equals("")||userPassword.equals("")||userPhone.equals("")){
+                    Toast.makeText(RegisterActivity.this, "请将信息填写完整", Toast.LENGTH_SHORT).show();
                 }else {
-                    JSONObject jsonObject = new JSONObject();
+                    JSONObject user = new JSONObject();
                     try {
-                        jsonObject.put("username", username);
-                        jsonObject.put("password", password);
-                        jsonObject.put("phone", phone);
+                        String userID= GenerateID.generateID();
+                        user.put("id",userID);
+                        user.put("userName", userName);
+                        user.put("userPassword", userPassword);
+                        user.put("userPhone", userPhone);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String url = "http://10.131.93.59:8080/user/register";
-//                    RequestQueue requestQueue=Volley.newRequestQueue(RegisterActivity.this);
-//                    JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, url,jsonObject, new Response.Listener<JSONObject>() {
-//                        @Override
-//                        public void onResponse(JSONObject jsonObject) {
-//                            try {
-//                                Log.d("注册信息", jsonObject.toString());
-//                                String msg = jsonObject.getString("msg");
-//                                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                                if(msg.equals("注册成功")){
-//                                    JSONObject detail = jsonObject.getJSONObject("detail");
-//                                    final String username_login = detail.getString("username");
-//
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError volleyError) {
-//                            Toast.makeText(RegisterActivity.this, "网络出错", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    requestQueue.add(jsonObjectRequest);
+                    String temp_url = URL.url();
+                    String url = "http://"+temp_url+":8080/user/register";
+                    OkHttpClient httpClient = new OkHttpClient();
+                    MediaType type = MediaType.parse("application/json;charset=utf-8");
+                    RequestBody requestBody = RequestBody.create(type,""+ user);
+
+                    Request getRequest = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+                    Call call = httpClient.newCall(getRequest);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
+                            Log.i(TAG, "post请求失败 \n" +
+                                "*********请求体，传送数据*********** \n"+
+                                requestBody.toString() + "\n"+
+                                "*****user里的数据***** \n"+
+                                user);
+                        }
+
+                        @Override
+                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                            assert response.body() != null;
+                            String R = response.body().string();
+                            Log.i(TAG, "okHttpPost enqueue: \n " +
+                                "onResponse:"+ response.toString() +"\n " +
+                                "body:" +R);
+
+                            try {
+                                JSONObject toJsonObj= new JSONObject(R);
+                                if(response.code()==200 && toJsonObj.get("code").equals(1)){
+                                    Intent intent = new Intent();
+                                    intent.setClass(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Looper.prepare();
+                                    Toast.makeText(RegisterActivity.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    });
 
                 }
             }
