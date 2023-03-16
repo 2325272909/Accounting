@@ -54,6 +54,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-fragment:2.4.1'
     implementation 'androidx.navigation:navigation-ui:2.4.1'
+    implementation 'com.alibaba:fastjson:1.1.54.android'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.0.pr3'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.0.pr3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr3'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 

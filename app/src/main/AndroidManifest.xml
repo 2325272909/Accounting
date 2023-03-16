@@ -40,6 +40,12 @@
         <activity
             android:name=".Activity.SignActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.ModifyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ModifyPasswordActivity"
+            android:exported="false" />
 
     </application>
 

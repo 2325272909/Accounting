@@ -17,6 +17,7 @@ public class BlankFragment extends Fragment {
 
     public BlankFragment() {
         // Required empty public constructor
+        //super(R.layout.fragment_blank);
     }
 
     /**

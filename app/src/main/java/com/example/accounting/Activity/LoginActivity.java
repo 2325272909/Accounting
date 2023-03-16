@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accounting.R;
+import com.example.accounting.entity.User;
 import com.example.accounting.utils.URL;
 
 
@@ -23,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import com.alibaba.fastjson.JSON; //导入方法依赖的package包/类
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String temp_url = URL.url();
-                String url = "http://"+temp_url+":8080/user/login";
+                String url = temp_url+"/user/login";
                 Log.i(TAG,"拼接后的url地址："+url);   //测试url拼接能否使用
                 String username = name.getText().toString().trim();
                 String userPassword = password.getText().toString().trim();
@@ -107,8 +110,11 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 JSONObject toJsonObj= new JSONObject(R);
                                 if(response.code()==200 && toJsonObj.get("code").equals(1)){
+                                   Object obj = toJsonObj.get("data");
+                                   User user =JSON.parseObject(obj.toString(),User.class);
                                     Intent intent = new Intent();
                                     intent.setClass(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("user",user);  //传参，要改
                                     startActivity(intent);
                                 }
                                 else {

@@ -48,7 +48,7 @@
             android:text="记一笔" />
 
         <RadioButton
-            android:id="@+id/contact_tab"
+            android:id="@+id/total_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,7 +58,7 @@
             android:text="统计" />
 
         <RadioButton
-            android:id="@+id/settings_tab"
+            android:id="@+id/mine_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

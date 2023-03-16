@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edt_userName;
     private EditText edt_userPassword;
     private EditText edt_userPhone;
-    Button return_login,register;  //返回登录、注册按钮
+    private Button return_login,register;  //返回登录、注册按钮
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     String temp_url = URL.url();
-                    String url = "http://"+temp_url+":8080/user/register";
+                    String url = temp_url+"/user/register";
                     OkHttpClient httpClient = new OkHttpClient();
                     MediaType type = MediaType.parse("application/json;charset=utf-8");
                     RequestBody requestBody = RequestBody.create(type,""+ user);
