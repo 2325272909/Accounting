@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         // find view
-        mViewPager = findViewById(R.id.fragment_vp);  //显示区
+        mViewPager = findViewById(R.id.fragment);  //显示区
         mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
         // init fragment
         mFragments = new ArrayList<>(4);   //显示内容

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.accounting.Activity.CategoryListActivity;
 import com.example.accounting.Activity.LoginActivity;
 import com.example.accounting.Activity.MainActivity;
 import com.example.accounting.Activity.ModifyActivity;
@@ -108,14 +109,17 @@ public class Fragment_mine extends Fragment {
         textView.setText(user.getUserName());   //当前登录用户名
         Log.i(TAG,"user里的内容："+user);
 
-        //分类展示功能
+        /**
+         * 分类展示功能
+         */
         btn_category.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                Log.i(TAG,"点击分类按钮");
-
-                Toast.makeText(getActivity(), "分类信息", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), CategoryListActivity.class);
+                intent.putExtra("UserId",user.getId());  //将登录用户的ID传递给 分类Activity,方便查询与用户关联的分类
+                startActivity(intent);
             }
         });
 
@@ -168,6 +172,9 @@ public class Fragment_mine extends Fragment {
             }
         });
 
+        /**
+         * 修改密码功能
+         */
         btn_modifyPassword.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

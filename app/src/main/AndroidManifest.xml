@@ -46,6 +46,9 @@
         <activity
             android:name=".Activity.ModifyPasswordActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.CategoryListActivity"
+            android:exported="false" />
 
     </application>
 
