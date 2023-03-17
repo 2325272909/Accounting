@@ -118,6 +118,7 @@ public class ModifyActivity extends AppCompatActivity {
                                     Intent intent = new Intent();
                                     intent.setClass(ModifyActivity.this, MainActivity.class);
                                     intent.putExtra("user", user);  //传参，要改
+                                    intent.putExtra("fragment_id",3);
                                     startActivity(intent);
                                 } else {
                                     Looper.prepare();

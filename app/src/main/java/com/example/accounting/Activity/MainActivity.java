@@ -62,19 +62,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         int fragment_id = getIntent().getIntExtra("fragment_id",0);
-        if(fragment_id==3){
-//            Fragment fragment = new Fragment_mine();
-//            FragmentManager fmanger = getSupportFragmentManager();
-//            FragmentTransaction transaction = fmanger.beginTransaction();
-//            transaction.replace(R.id.fragment_vp, fragment);
-//            transaction.commit();
-            mViewPager.setCurrentItem(3);//
 
-            //帮助跳转到指定子fragment
-//            Intent intent=new Intent();
-//            intent.setClass(MainActivity.this,Fragment_mine.class);
-//            intent.putExtra("id",2);
-        }
+        mViewPager.setCurrentItem(fragment_id);//
+
         super.onResume();
     }
     /**
