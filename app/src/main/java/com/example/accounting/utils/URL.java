@@ -1,5 +1,9 @@
 package com.example.accounting.utils;
 
+
+/**
+ * 网络请求设置url
+ */
 public class URL {
 
     public static String url(){
