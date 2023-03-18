@@ -20,6 +20,15 @@
             android:text="主布局"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/category_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="210dp"
+            android:backgroundTint="@color/white"
+            android:text="添加"
+            android:textColor="#3342A5" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -29,13 +38,10 @@
         android:background="@android:color/darker_gray"
         android:visibility="gone">
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tv_team_child"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="副布局"
-            android:textColor="@android:color/black"
-            android:textSize="28sp" />
+           />
     </RelativeLayout>
 </LinearLayout>

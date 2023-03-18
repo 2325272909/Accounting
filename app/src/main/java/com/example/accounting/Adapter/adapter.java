@@ -1,14 +1,17 @@
-package com.example.accounting.utils;
+package com.example.accounting.Adapter;
 
 
 import android.content.Context;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
@@ -60,7 +63,7 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
     @Override
     public void onBindViewHolder(final adapter.myviewholder viewHolder, int position) {
         viewHolder.tvTeam.setText(mlist.get(position));
-        viewHolder.tvTeamChild.setText(mlist.get(position)+"的子内容");
+//        viewHolder.tvTeamChild.setText(mlist.get(position)+"的子内容");
 
         final boolean isExpand = position == expandPosition;
         viewHolder.rlChild.setVisibility(isExpand ? View.VISIBLE : View.GONE);
@@ -74,6 +77,13 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
                 expandPosition = isExpand ? -1 : viewHolder.getAdapterPosition();
                 mViewholder = isExpand ? null : viewHolder;
                 notifyItemChanged(viewHolder.getAdapterPosition());
+            }
+        });
+
+        viewHolder.category_add.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.i(MotionEffect.TAG,"点击按钮");
             }
         });
     }
@@ -92,12 +102,14 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
     public static class myviewholder extends RecyclerView.ViewHolder {
         RelativeLayout rlParent,rlChild;
         TextView tvTeam,tvTeamChild;
+        Button category_add;
         public myviewholder(View itemView) {
             super(itemView);
             rlParent = itemView.findViewById(R.id.rl_parent);
             rlChild = itemView.findViewById(R.id.rl_child);
             tvTeam = itemView.findViewById(R.id.tv_team);
-            tvTeamChild = itemView.findViewById(R.id.tv_team_child);
+//            tvTeamChild = itemView.findViewById(R.id.tv_team_child);
+            category_add = itemView.findViewById(R.id.category_add);  //添加子类按钮
         }
 
 

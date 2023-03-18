@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
 
-import com.example.accounting.utils.adapter;
+import com.example.accounting.Adapter.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
