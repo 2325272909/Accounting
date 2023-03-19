@@ -31,6 +31,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * 注册用户Activity
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText edt_userName;

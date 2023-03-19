@@ -17,6 +17,9 @@ import com.example.accounting.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 主界面Activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;  //显示区

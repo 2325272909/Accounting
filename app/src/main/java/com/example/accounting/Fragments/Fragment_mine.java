@@ -45,6 +45,7 @@ import okhttp3.Response;
  * A simple {@link Fragment} subclass.
  * Use the {@link Fragment_mine#newInstance} factory method to
  * create an instance of this fragment.
+ * "我的"模块fragment
  */
 public class Fragment_mine extends Fragment {
 

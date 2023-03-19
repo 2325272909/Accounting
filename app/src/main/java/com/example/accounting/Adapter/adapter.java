@@ -3,6 +3,7 @@ package com.example.accounting.Adapter;
 
 import android.content.Context;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import androidx.constraintlayout.helper.widget.MotionEffect;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
@@ -23,7 +29,7 @@ import java.util.List;
  * 通过对list列表数据封装，实现recyclerview中的数据显示
  * 主要作用于分类展示
  */
-public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
+public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
 
     private Context context;
     private List<String> mlist = new ArrayList<>();
@@ -35,7 +41,7 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
     }
 
     public void setExpandCollapseDataList(List<String> list) {
-        mlist = list;
+        mlist = list;  //设置展开折叠列表
         notifyDataSetChanged();
     }
 
@@ -86,6 +92,20 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
                 Log.i(MotionEffect.TAG,"点击按钮");
             }
         });
+
+
+        /**
+         * 给子类的RecyclerView设置菜品数据适配器
+         *应该进行判断，读取不同的数据库
+         * 例：List<DishViewDto> dishViewDtoList = mDatas.get(position).getDishViewDtoList();
+         *         DishAdapter dishAdapter = new DishAdapter(dishViewDtoList);
+         * mDatas是类的集合
+         */
+        List<String> itemNames = new ArrayList<>();
+        itemNames.add("服装");
+        ListItemAdapter listItemAdapter = new ListItemAdapter(itemNames);
+        viewHolder.recyclerView.setAdapter(listItemAdapter);
+        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
     }
 
 
@@ -101,18 +121,25 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder>{
 
     public static class myviewholder extends RecyclerView.ViewHolder {
         RelativeLayout rlParent,rlChild;
-        TextView tvTeam,tvTeamChild;
+
+        RecyclerView recyclerView;
+        TextView tvTeam;
+
         Button category_add;
+
         public myviewholder(View itemView) {
             super(itemView);
             rlParent = itemView.findViewById(R.id.rl_parent);
             rlChild = itemView.findViewById(R.id.rl_child);
             tvTeam = itemView.findViewById(R.id.tv_team);
+            recyclerView=itemView.findViewById(R.id.item_recyclerView);
+
 //            tvTeamChild = itemView.findViewById(R.id.tv_team_child);
             category_add = itemView.findViewById(R.id.category_add);  //添加子类按钮
         }
 
 
     }
+
 }
 

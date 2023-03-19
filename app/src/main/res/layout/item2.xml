@@ -17,6 +17,7 @@
             android:backgroundTint="@color/white"
             android:gravity="center|left"
             android:text="分类的子类"
+            android:textSize="24sp"
             android:textColor="#3342A5" />
 
         <Button
@@ -26,6 +27,7 @@
             android:layout_marginLeft="210dp"
             android:backgroundTint="@color/white"
             android:text="删除"
+            android:textSize="24sp"
             android:textColor="#3342A5" />
 
     </RelativeLayout>
