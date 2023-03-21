@@ -36,9 +36,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * 修改信息Activity
- */
 public class ModifyActivity extends AppCompatActivity {
 
     private EditText edt_userName,edt_userPhone;

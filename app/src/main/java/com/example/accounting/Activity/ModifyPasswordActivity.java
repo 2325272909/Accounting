@@ -33,9 +33,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * 修改密码Activity
- */
 public class ModifyPasswordActivity extends AppCompatActivity {
     private EditText edt_password,edt_repeat;
     private Button btn_modify;

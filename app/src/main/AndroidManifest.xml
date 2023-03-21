@@ -49,6 +49,9 @@
         <activity
             android:name=".Activity.CategoryListActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.Activity_record_consume"
+            android:exported="false" />
 
     </application>
 

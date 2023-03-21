@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.Activity_record_consume">
+
+
+    <EditText
+        android:id="@+id/spending_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="请输入消费金额"
+        android:inputType="textPersonName"
+        />
+
+    <EditText
+        android:id="@+id/spending_stores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入消费商家"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/spending_times"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入时间"
+        android:inputType="textPersonName" />
+<!--    <DatePicker-->
+<!--        android:id="@+id/spending_time"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:datePickerMode="calendar"-->
+<!--        android:hint="请输入消费时间"-->
+<!--        android:inputType="date" />-->
+    <ListView
+        android:id="@+id/spending_credential"
+        android:hint="选择消费凭据"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:id="@+id/spending_types"
+        android:hint="选择消费类型"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

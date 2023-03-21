@@ -119,7 +119,7 @@ public class Fragment_mine extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), CategoryListActivity.class);
-                intent.putExtra("UserId",user.getId());  //将登录用户的ID传递给 分类Activity,方便查询与用户关联的分类
+                intent.putExtra("user",user);  //将登录用户的ID传递给 分类Activity,方便查询与用户关联的分类
                 startActivity(intent);
             }
         });

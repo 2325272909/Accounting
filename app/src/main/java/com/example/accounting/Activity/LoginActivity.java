@@ -35,9 +35,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * 登录 Activity
- */
 public class LoginActivity extends AppCompatActivity {
     private EditText name;
     private EditText password;

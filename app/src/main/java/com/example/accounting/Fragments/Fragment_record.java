@@ -1,74 +1,77 @@
-package com.example.accounting.Activity;
+package com.example.accounting.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
-
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.accounting.BlankFragment;
-import com.example.accounting.Fragments.Fragment_mine;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import com.example.accounting.Fragments.Fragment_record1;
 import com.example.accounting.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class Fragment_record extends Fragment {
 
-    private ViewPager mViewPager;  //显示区
-    private RadioGroup mTabRadioGroup;  //底部导航栏
+    private ViewPager viewPager;  //显示区
+    private RadioGroup radioGroup;  //底部导航栏
+    private static final String ARG_user = "userName";
 
-    private List<Fragment> mFragments = new ArrayList<>();
-    private FragmentPagerAdapter mAdapter;
+    private List<Fragment> fragments = new ArrayList<>();
+    private FragmentPagerAdapter adapter;
+
+    public static Fragment_record newInstance(String userName) {
+        Fragment_record fragment = new Fragment_record();
+        Bundle args = new Bundle();
+        args.putString(ARG_user,userName);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
+        intitView();
     }
 
-    private void initView() {
-        // find view
-        mViewPager = findViewById(R.id.fragment_vp);  //显示区
-        mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.fragment_record, container, false);
+    }
+
+
+    public void intitView( ) {
+        // Inflate the layout for this fragment
+        viewPager = getActivity().findViewById(R.id.fragment);  //显示区
+        radioGroup = getActivity().findViewById(R.id.tabs_rg); //底部导航栏
         // init fragment
-        mFragments = new ArrayList<>(4);   //显示内容
-        mFragments.add(BlankFragment.newInstance("流水"));
-        mFragments.add(new Fragment_record1());
-        mFragments.add(BlankFragment.newInstance("统计"));
-//        mFragments.add(BlankFragment.newInstance("我的"));
-        mFragments.add(Fragment_mine.newInstance("userName")) ;
+        fragments = new ArrayList<>();   //显示内容
+        fragments.add(new Fragment_consume());
+        fragments.add(new Fragment_income());
+
         // init view pager
-        mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
-        mViewPager.setAdapter(mAdapter);
+        adapter = new MyFragmentPagerAdapter(getChildFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
         // register listener
-        mViewPager.addOnPageChangeListener(mPageChangeListener);
-        mTabRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        viewPager.addOnPageChangeListener(mPageChangeListener);
+        radioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        mViewPager.removeOnPageChangeListener(mPageChangeListener);
+        viewPager.removeOnPageChangeListener(mPageChangeListener);
     }
 
-    @Override
-    protected void onResume(){
-        int fragment_id = getIntent().getIntExtra("fragment_id",0);
-
-        mViewPager.setCurrentItem(fragment_id);//
-
-        super.onResume();
-    }
     /**
      * 页面转换监听
      */
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            RadioButton radioButton = (RadioButton) mTabRadioGroup.getChildAt(position);  //选中事件
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(position);  //选中事件
             radioButton.setChecked(true);
         }
 
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             for (int i = 0; i < group.getChildCount(); i++) {
                 if (group.getChildAt(i).getId() == checkedId) {
-                    mViewPager.setCurrentItem(i);
+                    viewPager.setCurrentItem(i);
                     return;
                 }
             }
@@ -144,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return this.mList == null ? 0 : this.mList.size();
         }
+
+
     }
+
 
 }

@@ -1,7 +1,10 @@
 package com.example.accounting.Activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,6 +19,7 @@ import com.example.accounting.Fragments.Fragment_consume;
 import com.example.accounting.Fragments.Fragment_income;
 import com.example.accounting.Fragments.Fragment_mine;
 import com.example.accounting.R;
+import com.example.accounting.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,8 @@ public class CategoryListActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;  //显示区
     private RadioGroup mTabRadioGroup;  //底部导航栏
-
+    private Button exit;
+    private User user;
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentPagerAdapter mAdapter;
 
@@ -36,12 +41,25 @@ public class CategoryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorylist);
         initView();
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(CategoryListActivity.this,MainActivity.class);
+                intent.putExtra("user",user);
+                intent.putExtra("fragment_id",3);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
         // find view
+        this.user =(User) getIntent().getSerializableExtra("user");
         mViewPager = findViewById(R.id.fragment);  //显示区
         mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
+        exit = findViewById(R.id.exit);
         // init fragment
         mFragments = new ArrayList<>(2);   //显示内容
         mFragments.add(new Fragment_consume());
