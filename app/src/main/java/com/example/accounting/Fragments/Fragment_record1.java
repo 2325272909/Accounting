@@ -15,6 +15,9 @@ import com.example.accounting.R;
 import com.example.accounting.entity.User;
 
 
+/**
+ * "记一笔的fragment"
+ */
 public class Fragment_record1 extends Fragment {
     Button consume,consume_OCR,income;
     private User user ;

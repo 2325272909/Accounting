@@ -17,6 +17,10 @@ import com.example.accounting.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 初步“记一笔”的fragment，暂时未使用
+ */
 public class Fragment_record extends Fragment {
 
     private ViewPager viewPager;  //显示区
