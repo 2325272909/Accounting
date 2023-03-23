@@ -114,7 +114,7 @@ public class ModifyActivity extends AppCompatActivity {
                                 JSONObject toJsonObj = new JSONObject(R);
                                 if (response.code() == 200 && toJsonObj.get("code").equals(1)) {
                                     Object obj = toJsonObj.get("data");
-                                    User user = JSON.parseObject(obj.toString(), User.class);
+                                    User user = JSON.parseObject(obj.toString(), User.class);  //后端返回来修改后的user
                                     Intent intent = new Intent();
                                     intent.setClass(ModifyActivity.this, MainActivity.class);
                                     intent.putExtra("user", user);  //传参，要改

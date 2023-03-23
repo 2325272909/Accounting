@@ -20,7 +20,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.accounting.R;
+import com.example.accounting.utils.HttpUtil;
+import com.example.accounting.utils.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +96,9 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
             }
         });
 
-
+        String category = (mlist.get(position) ) ;   //标志
+        String temp_url = URL.url();
+        String url = temp_url+"/user/item/list";
         /**
          * 给子类的RecyclerView设置菜品数据适配器
          *应该进行判断，读取不同的数据库
@@ -101,6 +106,9 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
          *         DishAdapter dishAdapter = new DishAdapter(dishViewDtoList);
          * mDatas是类的集合
          */
+
+        String R=HttpUtil.getJson(url,category);
+
         List<String> itemNames = new ArrayList<>();
         itemNames.add("服装");
         ListItemAdapter listItemAdapter = new ListItemAdapter(itemNames);
@@ -119,6 +127,9 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
     }
 
 
+    /**
+     * 继承recyclerView的父类
+     */
     public static class myviewholder extends RecyclerView.ViewHolder {
         RelativeLayout rlParent,rlChild;
 

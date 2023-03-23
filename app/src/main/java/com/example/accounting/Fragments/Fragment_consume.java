@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
 import com.example.accounting.Adapter.adapter;
+import com.example.accounting.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Fragment_consume extends Fragment {
 
     private List<String> mlist = new ArrayList<>();
+    private User user;
 
     public Fragment_consume(){}
 
@@ -28,6 +30,7 @@ public class Fragment_consume extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_consume, container, false);
+        this.user= (User) getActivity().getIntent().getSerializableExtra("user");  //获取当前登录用户
 
         adapter myadapter = new adapter(getActivity());
         RecyclerView rcvExpandCollapse = view.findViewById(R.id.consume_recycleView);
