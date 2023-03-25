@@ -2,6 +2,8 @@ package com.example.accounting.Activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static com.example.accounting.utils.HttpUtil.cookieStore;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
+import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
 
@@ -24,11 +27,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.fastjson.JSON; //导入方法依赖的package包/类
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -77,23 +86,38 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+//                    String R= HttpUtil.postJsonObj(url,user);
 
-                    OkHttpClient httpClient = new OkHttpClient();
-                    MediaType type = MediaType.parse("application/json;charset=utf-8");
-                    RequestBody requestBody = RequestBody.create(type,""+ user);
-
-                    Request getRequest = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-                    Call call = httpClient.newCall(getRequest);
+//                    OkHttpClient httpClient = new OkHttpClient.Builder().
+//                        cookieJar(new CookieJar() {
+//                            @Override
+//                            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+//                                cookieStore.put(url.host(),cookies);
+//                            }
+//
+//                            @Override
+//                            public List<Cookie> loadForRequest(HttpUrl url) {
+//                                List<Cookie> cookies = cookieStore.get(url.host());
+//                                return cookies != null?cookies:new ArrayList<Cookie>();
+//                            }
+//                        }).build();
+//
+//
+//                    MediaType type = MediaType.parse("application/json;charset=utf-8");
+//                    RequestBody requestBody = RequestBody.create(type,""+ user);
+//
+//                    Request getRequest = new Request.Builder()
+//                        .url(url)
+//                        .post(requestBody)
+//                        .build();
+//
+                    Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
 
                             Log.i(TAG, "post请求失败 \n" +
                                 "*********请求体，传送数据*********** \n"+
-                                requestBody.toString() + "\n"+
                                 "*****user里的数据***** \n"+
                                 user);
                         }
@@ -102,19 +126,16 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                             assert response.body() != null;
                             String R = response.body().string();
-                            Log.i(TAG, "okHttpPost enqueue: \n " +
-                                "onResponse:"+ response.toString() +"\n " +
-                                "body:" +R);
-                            //将resoust转换成jsonPath 格式
-//                            io.restassured.path.json.JsonPath jsonPath =io.restassured.path.json.JsonPath.from(R);
+                            Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
+
                             try {
                                 JSONObject toJsonObj= new JSONObject(R);
-                                if(response.code()==200 && toJsonObj.get("code").equals(1)){
+                                if( toJsonObj.get("code").equals(1)){
                                    Object obj = toJsonObj.get("data");
-                                   User user =JSON.parseObject(obj.toString(),User.class);
+                                   User user1 =JSON.parseObject(obj.toString(),User.class);
                                     Intent intent = new Intent();
                                     intent.setClass(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra("user",user);  //传参，要改
+                                    intent.putExtra("user",user1);  //传参，要改
                                     startActivity(intent);
                                 }
                                 else {

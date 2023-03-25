@@ -1,6 +1,8 @@
 package com.example.accounting.Adapter;
 
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,8 +28,13 @@ import com.example.accounting.R;
 import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 通过对list列表数据封装，实现recyclerview中的数据显示
@@ -106,8 +114,23 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
          *         DishAdapter dishAdapter = new DishAdapter(dishViewDtoList);
          * mDatas是类的集合
          */
+        Call call = HttpUtil.getJson(url,category);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "post请求失败 \n" );
+            }
 
-        String R=HttpUtil.getJson(url,category);
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String R = response.body().string();
+                Log.i(TAG, "okHttpPost enqueue: \n " +
+                    "onResponse:"+ response.toString() +"\n " +
+                    "body:" +R);
+
+            }
+        });
 
         List<String> itemNames = new ArrayList<>();
         itemNames.add("服装");

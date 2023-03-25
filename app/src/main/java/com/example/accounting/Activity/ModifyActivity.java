@@ -18,6 +18,7 @@ import androidx.constraintlayout.helper.widget.MotionEffect;
 
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
+import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
 
@@ -85,15 +86,7 @@ public class ModifyActivity extends AppCompatActivity {
                     }
 
 
-                    OkHttpClient httpClient = new OkHttpClient();
-                    MediaType type = MediaType.parse("application/json;charset=utf-8");
-                    RequestBody requestBody = RequestBody.create(type, "" + user);
-
-                    Request getRequest = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-                    Call call = httpClient.newCall(getRequest);
+                    Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {

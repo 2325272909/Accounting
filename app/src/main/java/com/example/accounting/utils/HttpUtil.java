@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.alibaba.fastjson.JSONObject;
+
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,75 +22,42 @@ import okhttp3.*;
 
 public class HttpUtil {
     private static String R;
-    private static HashMap<String,List<Cookie>> cookieStore=new HashMap<>();
+    public static HashMap<String,List<Cookie>> cookieStore=new HashMap<>();
     private HttpUtil() {
     }
 
-    /**
-     * 发送get请求
-     *
-     * @param url    地址
-     * @param params 参数
-     * @return 请求结果
-     */
-    public static String get(String url, JSONObject params) {
-        return request("get", url, params);
-    }
 
     /**
-     * 发送post请求
-     *
-     * @param url    地址
-     * @param params 参数
-     * @return 请求结果
+     * Post请求被
+     * @param url
+     * @param params
+     * @return
      */
-    public static String post(String url, JSONObject params) {
-        return request("post", url, params);
-    }
+    public static Call postJsonObj(String url, JSONObject params) {
 
-    /**
-     * 发送http请求
-     *
-     * @param method 请求方法
-     * @param url    地址
-     * @param params 参数
-     * @return 请求结果
-     */
-    public static String request(String method, String url, JSONObject params) {
-
-        if (method == null) {
-            throw new RuntimeException("请求方法不能为空");
-        }
-
-        if (url == null) {
-            throw new RuntimeException("url不能为空");
-        }
-
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
-
-        if (params != null) {
-//            for (Map.Entry<String, String> param : params.entrySet()) {
-//                httpBuilder.addQueryParameter(param.getKey(), param.getValue());
-//            }
-            MediaType type = MediaType.parse("application/json;charset=utf-8");
-            RequestBody requestBody = RequestBody.create(type,""+ params);
-
-        }
+        MediaType type = MediaType.parse("application/json;charset=utf-8");
+        RequestBody requestBody = RequestBody.create(type,""+ params);
 
         Request request = new Request.Builder()
-            .url(httpBuilder.build())
-            .method(method, new FormBody.Builder().build())
+            .url(url)
+            .post(requestBody)
             .build();
 
-        try {
-            OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(20, TimeUnit.SECONDS)
-                .build();
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            return null;
-        }
+        OkHttpClient client = new OkHttpClient.Builder()
+            .cookieJar(new CookieJar() {
+                @Override
+                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                    cookieStore.put(url.host(),cookies);
+                }
+
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl url) {
+                    List<Cookie> cookies = cookieStore.get(url.host());
+                    return cookies != null?cookies: new ArrayList<>();
+                }
+            }).build();
+        Call call = client.newCall(request);
+        return call;
     }
 
     /**
@@ -107,37 +76,19 @@ public class HttpUtil {
             .post(requestBody)
             .build();
 
-        try {
-            OkHttpClient client = new OkHttpClient.Builder().
-                cookieJar(new CookieJar() {
-                    @Override
-                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                        cookieStore.put(url.host(),cookies);
-                    }
+        OkHttpClient client = new OkHttpClient.Builder().
+            cookieJar(new CookieJar() {
+                @Override
+                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                    cookieStore.put(url.host(),cookies);
+                }
 
-                    @Override
-                    public List<Cookie> loadForRequest(HttpUrl url) {
-                        List<Cookie> cookies = cookieStore.get(url.host());
-                        return cookies != null?cookies:new ArrayList<Cookie>();
-                    }
-                }).build();
-
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public static String getJson(String url, String json) {
-
-        String url1 = url+"?category="+json;
-        Request request = new Request.Builder()
-            .url(url1)
-            .get()
-            .build();
-
-        OkHttpClient client = new OkHttpClient();
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl url) {
+                    List<Cookie> cookies = cookieStore.get(url.host());
+                    return cookies != null?cookies:new ArrayList<Cookie>();
+                }
+            }).build();
 
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -157,6 +108,33 @@ public class HttpUtil {
             }
         });
         return R;
+    }
+
+    public static Call getJson(String url, String json) {
+
+        String url1 = url+"?category="+json;
+        Request request = new Request.Builder()
+            .url(url1)
+            .get()
+            .build();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+            .cookieJar(new CookieJar() {
+                @Override
+                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                    cookieStore.put(url.host(),cookies);
+                }
+
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl url) {
+                    List<Cookie> cookies = cookieStore.get(url.host());
+                    return cookies != null?cookies: new ArrayList<>();
+                }
+            }).build();
+
+        Call call = client.newCall(request);
+
+        return call;
     }
 
 }

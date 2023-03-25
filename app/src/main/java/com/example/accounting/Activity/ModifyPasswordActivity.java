@@ -18,6 +18,7 @@ import androidx.constraintlayout.helper.widget.MotionEffect;
 import com.alibaba.fastjson.JSON;
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
+import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
 import org.json.JSONException;
@@ -54,7 +55,7 @@ public class ModifyPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String temp_url = URL.url();
-                String url = temp_url + "/user/update";
+                String url = temp_url + "/user/updatePassword";
                 Log.i(TAG, "拼接后的url地址：" + url);   //测试url拼接能否使用
                 String password = edt_password.getText().toString().trim();
                 String repeat = edt_repeat.getText().toString().trim();
@@ -80,15 +81,7 @@ public class ModifyPasswordActivity extends AppCompatActivity {
                     }
 
 
-                    OkHttpClient httpClient = new OkHttpClient();
-                    MediaType type = MediaType.parse("application/json;charset=utf-8");
-                    RequestBody requestBody = RequestBody.create(type, "" + user1);
-
-                    Request getRequest = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-                    Call call = httpClient.newCall(getRequest);
+                    Call call =  HttpUtil.postJsonObj(url,user1);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {

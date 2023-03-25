@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accounting.R;
 import com.example.accounting.utils.GenerateID;
+import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
 import org.json.JSONException;
@@ -86,22 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     String temp_url = URL.url();
                     String url = temp_url+"/user/register";
-                    OkHttpClient httpClient = new OkHttpClient();
-                    MediaType type = MediaType.parse("application/json;charset=utf-8");
-                    RequestBody requestBody = RequestBody.create(type,""+ user);
-
-                    Request getRequest = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-                    Call call = httpClient.newCall(getRequest);
+                    Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
 
                             Log.i(TAG, "post请求失败 \n" +
                                 "*********请求体，传送数据*********** \n"+
-                                requestBody.toString() + "\n"+
                                 "*****user里的数据***** \n"+
                                 user);
                         }
