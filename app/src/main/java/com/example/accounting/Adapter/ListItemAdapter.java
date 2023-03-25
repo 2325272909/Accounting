@@ -23,22 +23,25 @@ public class ListItemAdapter  extends RecyclerView.Adapter<ListItemAdapter.viewH
     private List<SpendingType> spendingTypeList;   //消费类型列表
     private List<IncomeType> incomeTypeList;   //收入类型列表
 
-    private List<String> itemsName = new ArrayList<>();
+    private List<String> itemsName ;
 
     private Context context;
 
 
-//    public ListItemAdapter(Context context) {
-//        this.context  = context;
-//    }
-    public ListItemAdapter(List<String> list) {
-    this.itemsName = list;
-}
+    public ListItemAdapter(Context context) {
+        this.context  = context;
+    }
+
+    public void setDataList(List<String> list) {
+        itemsName = list;  //设置展开折叠列表
+        notifyDataSetChanged();
+    }
 
     @Override
     public ListItemAdapter.viewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-       View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item2,parent,false);
-       return  new viewHolder(v);
+//       View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item2,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item2,null);
+        return  new viewHolder(v);
     }
 
     @Override

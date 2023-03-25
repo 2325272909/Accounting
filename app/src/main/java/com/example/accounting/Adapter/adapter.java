@@ -20,13 +20,17 @@ import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.accounting.R;
 import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
 
     private Context context;
     private List<String> mlist = new ArrayList<>();
+    private List<String> itemNames = new ArrayList<>();
     private int expandPosition = -1;
     private myviewholder mViewholder;
 
@@ -78,10 +83,8 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(final adapter.myviewholder viewHolder, int position) {
+    public  void onBindViewHolder(final adapter.myviewholder viewHolder, int position) {
         viewHolder.tvTeam.setText(mlist.get(position));
-//        viewHolder.tvTeamChild.setText(mlist.get(position)+"的子内容");
-
         final boolean isExpand = position == expandPosition;
         viewHolder.rlChild.setVisibility(isExpand ? View.VISIBLE : View.GONE);
         viewHolder.rlParent.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +117,7 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
          *         DishAdapter dishAdapter = new DishAdapter(dishViewDtoList);
          * mDatas是类的集合
          */
+
         Call call = HttpUtil.getJson(url,category);
         call.enqueue(new Callback() {
             @Override
@@ -129,14 +133,32 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
                     "onResponse:"+ response.toString() +"\n " +
                     "body:" +R);
 
+                try {
+                    List<String> temp_items = new ArrayList<>();
+                    JSONObject toJsonObj= new JSONObject(R);
+                    JSONArray jsonArray = toJsonObj.getJSONArray("data");
+                    for(int i = 0;i<jsonArray.length();i++){
+                        temp_items.add((String)jsonArray.get(i));
+                    }
+                    itemNames = temp_items;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         });
 
-        List<String> itemNames = new ArrayList<>();
-        itemNames.add("服装");
-        ListItemAdapter listItemAdapter = new ListItemAdapter(itemNames);
-        viewHolder.recyclerView.setAdapter(listItemAdapter);
-        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
+//        List<String> itemNames = new ArrayList<>();
+//        itemNames.add("服装");
+         Log.i(TAG,"items数组"+itemNames);
+         ListItemAdapter listItemAdapter = new ListItemAdapter(context);
+         viewHolder.recyclerView.setAdapter(listItemAdapter);
+         viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
+         viewHolder.recyclerView.setHasFixedSize(true);
+         viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+         viewHolder.recyclerView.setAdapter(listItemAdapter);
+         listItemAdapter.setDataList(itemNames);
+
     }
 
 
