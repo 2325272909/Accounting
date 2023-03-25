@@ -17,14 +17,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.MotionEffect;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
+import com.example.accounting.utils.DividerItemDecoration;
 import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
@@ -85,38 +82,9 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
     @Override
     public  void onBindViewHolder(final adapter.myviewholder viewHolder, int position) {
         viewHolder.tvTeam.setText(mlist.get(position));
-        final boolean isExpand = position == expandPosition;
-        viewHolder.rlChild.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-        viewHolder.rlParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mViewholder !=null){
-                    mViewholder.rlChild.setVisibility(View.GONE);
-                    notifyItemChanged(expandPosition);
-                }
-                expandPosition = isExpand ? -1 : viewHolder.getAdapterPosition();
-                mViewholder = isExpand ? null : viewHolder;
-                notifyItemChanged(viewHolder.getAdapterPosition());
-            }
-        });
-
-        viewHolder.category_add.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Log.i(MotionEffect.TAG,"点击按钮");
-            }
-        });
-
         String category = (mlist.get(position) ) ;   //标志
         String temp_url = URL.url();
         String url = temp_url+"/user/item/list";
-        /**
-         * 给子类的RecyclerView设置菜品数据适配器
-         *应该进行判断，读取不同的数据库
-         * 例：List<DishViewDto> dishViewDtoList = mDatas.get(position).getDishViewDtoList();
-         *         DishAdapter dishAdapter = new DishAdapter(dishViewDtoList);
-         * mDatas是类的集合
-         */
 
         Call call = HttpUtil.getJson(url,category);
         call.enqueue(new Callback() {
@@ -141,6 +109,22 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
                         temp_items.add((String)jsonArray.get(i));
                     }
                     itemNames = temp_items;
+                    viewHolder.recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {   //线程里修改UI
+                            ListItemAdapter listItemAdapter = new ListItemAdapter(context);
+                            listItemAdapter.setDataList(itemNames);
+                            viewHolder.recyclerView.setAdapter(listItemAdapter);
+                            Log.i(TAG,"items数组"+itemNames);
+                            viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
+                            viewHolder.recyclerView.setHasFixedSize(true);
+                            viewHolder.recyclerView.setNestedScrollingEnabled(true);
+                      //  viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+                            viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context));
+
+                        }
+                    });
+
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -148,16 +132,30 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
             }
         });
 
-//        List<String> itemNames = new ArrayList<>();
-//        itemNames.add("服装");
-         Log.i(TAG,"items数组"+itemNames);
-         ListItemAdapter listItemAdapter = new ListItemAdapter(context);
-         viewHolder.recyclerView.setAdapter(listItemAdapter);
-         viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
-         viewHolder.recyclerView.setHasFixedSize(true);
-         viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-         viewHolder.recyclerView.setAdapter(listItemAdapter);
-         listItemAdapter.setDataList(itemNames);
+
+        final boolean isExpand = position == expandPosition;
+        viewHolder.rlChild.setVisibility(isExpand ? View.VISIBLE : View.GONE);
+        viewHolder.rlParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mViewholder !=null){
+                    mViewholder.rlChild.setVisibility(View.GONE);
+                    notifyItemChanged(expandPosition);
+                }
+                expandPosition = isExpand ? -1 : viewHolder.getAdapterPosition();
+                mViewholder = isExpand ? null : viewHolder;
+
+                notifyItemChanged(viewHolder.getAdapterPosition());
+            }
+        });
+
+        viewHolder.category_add.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.i(MotionEffect.TAG,"点击按钮");
+            }
+        });
+
 
     }
 
