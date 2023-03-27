@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class Income implements Serializable {
     private Long id;
     private Long userId;
-    private Long incomeTypeId;  //收入类型id
+    private String incomeTypeName;  //收入类型id
     private BigDecimal incomeMoney;  //收入金额
-    private LocalDateTime incomeTime;  //收入时间
+    private LocalDate incomeTime;  //收入时间
 }

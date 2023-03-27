@@ -19,7 +19,7 @@
         android:id="@+id/spending_stores"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="请输入消费商家"
+        android:hint="请输入消费商家(可空)"
         android:inputType="textPersonName" />
 
     <EditText
