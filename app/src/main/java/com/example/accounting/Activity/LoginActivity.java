@@ -86,38 +86,13 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-//                    String R= HttpUtil.postJsonObj(url,user);
 
-//                    OkHttpClient httpClient = new OkHttpClient.Builder().
-//                        cookieJar(new CookieJar() {
-//                            @Override
-//                            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-//                                cookieStore.put(url.host(),cookies);
-//                            }
-//
-//                            @Override
-//                            public List<Cookie> loadForRequest(HttpUrl url) {
-//                                List<Cookie> cookies = cookieStore.get(url.host());
-//                                return cookies != null?cookies:new ArrayList<Cookie>();
-//                            }
-//                        }).build();
-//
-//
-//                    MediaType type = MediaType.parse("application/json;charset=utf-8");
-//                    RequestBody requestBody = RequestBody.create(type,""+ user);
-//
-//                    Request getRequest = new Request.Builder()
-//                        .url(url)
-//                        .post(requestBody)
-//                        .build();
-//
                     Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
 
                             Log.i(TAG, "post请求失败 \n" +
-                                "*********请求体，传送数据*********** \n"+
                                 "*****user里的数据***** \n"+
                                 user);
                         }

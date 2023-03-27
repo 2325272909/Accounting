@@ -109,10 +109,11 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
                         temp_items.add((String)jsonArray.get(i));
                     }
                     itemNames = temp_items;
+                    ListItemAdapter listItemAdapter = new ListItemAdapter(context);
                     viewHolder.recyclerView.post(new Runnable() {
                         @Override
                         public void run() {   //线程里修改UI
-                            ListItemAdapter listItemAdapter = new ListItemAdapter(context);
+//                            ListItemAdapter listItemAdapter = new ListItemAdapter(context);
                             listItemAdapter.setDataList(itemNames);
                             viewHolder.recyclerView.setAdapter(listItemAdapter);
                             Log.i(TAG,"items数组"+itemNames);

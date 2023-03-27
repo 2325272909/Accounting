@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/spending_money"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:hint="请输入消费金额"
         android:inputType="textPersonName"
         />
@@ -18,14 +18,14 @@
     <EditText
         android:id="@+id/spending_stores"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:hint="请输入消费商家"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/spending_times"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:hint="请输入时间"
         android:inputType="textPersonName" />
 <!--    <DatePicker-->
@@ -35,15 +35,44 @@
 <!--        android:datePickerMode="calendar"-->
 <!--        android:hint="请输入消费时间"-->
 <!--        android:inputType="date" />-->
-    <ListView
+    <EditText
         android:id="@+id/spending_credential"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:hint="选择消费凭据"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ListView
+      />
+
+    <EditText
         android:id="@+id/spending_types"
-        android:hint="选择消费类型"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="60dp"
+        android:hint="选择消费类型"
+      />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="80dp"
+            android:text="添加"
+            android:textSize="34sp"
+            />
+
+        <Button
+            android:id="@+id/btn_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="40dp"
+            android:text="返回"
+            android:textSize="34sp"
+            />
+    </LinearLayout>
 
 </LinearLayout>

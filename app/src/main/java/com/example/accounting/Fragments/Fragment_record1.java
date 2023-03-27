@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.accounting.Activity.Activity_record_consume;
 
+import com.example.accounting.Activity.LoginActivity;
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
 
@@ -19,7 +21,8 @@ import com.example.accounting.entity.User;
  * "记一笔的fragment"
  */
 public class Fragment_record1 extends Fragment {
-    Button consume,consume_OCR,income;
+    private Button consume,consume_OCR,income;
+    private Button btn_return,btn_add;
     private User user ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,6 @@ public class Fragment_record1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_record1, container, false);
     }
@@ -39,10 +41,12 @@ public class Fragment_record1 extends Fragment {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
         consume=getActivity().findViewById(R.id.consume);
-        consume_OCR=getActivity().findViewById(R.id.btn_modify);
+        consume_OCR=getActivity().findViewById(R.id.consume_OCR);
         income=getActivity().findViewById(R.id.income);
 
-
+        /**
+         * 点击录入消费记录
+         */
         consume.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -53,6 +57,27 @@ public class Fragment_record1 extends Fragment {
                 startActivity(intent);
             }
         });
+
+        /**
+         * 点击OCR识别
+         */
+        consume_OCR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "点击OCR", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /**
+         * 点击录入收入记录
+         */
+        income.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "点击录入收入记录", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

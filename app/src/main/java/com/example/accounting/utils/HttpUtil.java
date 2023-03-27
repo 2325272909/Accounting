@@ -27,12 +27,7 @@ public class HttpUtil {
     }
 
 
-    /**
-     * Post请求被
-     * @param url
-     * @param params
-     * @return
-     */
+
     public static Call postJsonObj(String url, JSONObject params) {
 
         MediaType type = MediaType.parse("application/json;charset=utf-8");
