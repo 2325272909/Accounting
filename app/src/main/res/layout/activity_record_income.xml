@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.Activity_record_consume">
+    tools:context=".Activity.Activity_record_income">
 
     <TextView
-        android:id="@+id/spending"
+        android:id="@+id/income"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="录入消费记录"
+        android:hint="录入收入记录"
         android:inputType="textPersonName"
         android:textSize="24sp"
         />
@@ -26,39 +26,17 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:gravity="center|left"
-            android:text="消费金额:"
+            android:text="收入金额:"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/spending_money"
+            android:id="@+id/income_money"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="请输入消费金额"
+            android:hint="请输入收入金额"
             android:inputType="textPersonName" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txt_store"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
-            android:gravity="center|left"
-            android:text="消费商家:"
-            android:textSize="20sp" />
-
-       <EditText
-           android:id="@+id/spending_stores"
-           android:layout_width="match_parent"
-           android:layout_height="60dp"
-           android:hint="请输入消费商家(可空)"
-           android:inputType="textPersonName" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,38 +49,17 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:gravity="center|left"
-            android:text="消费时间:"
+            android:text="收入时间:"
             android:textSize="20sp" />
-       <EditText
-           android:id="@+id/spending_times"
-           android:layout_width="match_parent"
-           android:layout_height="60dp"
-           android:hint="请输入时间"
-           android:inputType="textPersonName" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txt_credential"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
-            android:gravity="center|left"
-            android:text="消费凭据:"
-            android:textSize="20sp" />
-
         <EditText
-            android:id="@+id/spending_credential"
+            android:id="@+id/income_times"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="选择消费凭据"
-      />
+            android:hint="请输入时间"
+            android:inputType="textPersonName" />
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -115,14 +72,14 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:gravity="center|left"
-            android:text="消费类型:"
+            android:text="收入类型:"
             android:textSize="20sp" />
         <EditText
-           android:id="@+id/spending_types"
-           android:layout_width="match_parent"
-           android:layout_height="60dp"
-           android:hint="选择消费类型"
-      />
+            android:id="@+id/income_types"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="选择收入类型"
+            />
     </LinearLayout>
 
     <LinearLayout

@@ -105,11 +105,10 @@ public class HttpUtil {
         return R;
     }
 
-    public static Call getJson(String url, String json) {
+    public static Call getJson(String url) {
 
-        String url1 = url+"?category="+json;
         Request request = new Request.Builder()
-            .url(url1)
+            .url(url)
             .get()
             .build();
 

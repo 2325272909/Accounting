@@ -90,7 +90,8 @@ public class Activity_record_consume extends AppCompatActivity {
 
                 String temp_url = URL.url();
                 String url = temp_url+"/user/item/list";
-                Call call = HttpUtil.getJson(url,"消费凭证");
+                String url1 = url+"?category="+"消费凭证";
+                Call call = HttpUtil.getJson(url1);
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -143,7 +144,8 @@ public class Activity_record_consume extends AppCompatActivity {
             public void onClick(View view) {
                 String temp_url = URL.url();
                 String url = temp_url+"/user/item/list";
-                Call call = HttpUtil.getJson(url,"消费类型");
+                String url1 = url+"?category="+"消费类型";
+                Call call = HttpUtil.getJson(url1);
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

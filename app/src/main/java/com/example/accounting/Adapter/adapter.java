@@ -85,8 +85,8 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
         String category = (mlist.get(position) ) ;   //标志
         String temp_url = URL.url();
         String url = temp_url+"/user/item/list";
-
-        Call call = HttpUtil.getJson(url,category);
+        String url1 = url+"?category="+category;
+        Call call = HttpUtil.getJson(url1);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

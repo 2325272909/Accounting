@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.accounting.Activity.Activity_record_consume;
 
+import com.example.accounting.Activity.Activity_record_income;
 import com.example.accounting.Activity.LoginActivity;
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
@@ -74,7 +75,10 @@ public class Fragment_record1 extends Fragment {
         income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "点击录入收入记录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), Activity_record_income.class);
+                intent.putExtra("user",user);  //将登录用户的ID传递给 分类Activity,方便查询与用户关联的分类
+                startActivity(intent);
             }
         });
 
