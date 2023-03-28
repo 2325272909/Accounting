@@ -55,6 +55,8 @@ public class Activity_record_consume extends AppCompatActivity {
     Calendar calendar= Calendar.getInstance(Locale.CHINA);
     private EditText spending_credential,spending_types;
     private Button btn_add,btn_return;
+    AlertDialog.Builder builder_type=null;
+    AlertDialog.Builder builder_credential=null;
     private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +87,6 @@ public class Activity_record_consume extends AppCompatActivity {
         spending_credential.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_record_consume.this);
-                builder.setTitle("选择消费凭证");
 
                 String temp_url = URL.url();
                 String url = temp_url+"/user/item/list";
@@ -113,20 +113,25 @@ public class Activity_record_consume extends AppCompatActivity {
                                 temp_items1.add((String)jsonArray.get(i));
                             }
                             temp_spendingCredentials = temp_items1;
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     }
                 });
-
+                if(builder_credential==null){
+                    builder_credential= new AlertDialog.Builder(Activity_record_consume.this);
+                    builder_credential.setTitle("选择消费凭证");
+                }
                 String[] items = temp_spendingCredentials.toArray(new String[temp_spendingCredentials.size()]);  //list转数组
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+                builder_credential.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                       spending_credential.setText(items[i]);
                     }
                 });
-                builder.show();
+                builder_credential.show();
+
             }
         });
 
@@ -167,16 +172,19 @@ public class Activity_record_consume extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_record_consume.this);
-                builder.setTitle("选择消费类型");
+                if(builder_type==null){
+                    builder_type = new AlertDialog.Builder(Activity_record_consume.this);
+                    builder_type.setTitle("选择消费类型");
+                }
+
                 String[] items = temp_spendingtypes.toArray(new String[temp_spendingtypes.size()]);  //list转数组
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+                builder_type.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         spending_types.setText(items[i]);
                     }
                 });
-                builder.create().show();
+                builder_type.create().show();
             }
         });
 
