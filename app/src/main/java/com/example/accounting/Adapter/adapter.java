@@ -21,7 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
+import com.example.accounting.entity.User;
 import com.example.accounting.utils.DividerItemDecoration;
+import com.example.accounting.utils.GenerateID;
 import com.example.accounting.utils.HttpUtil;
 import com.example.accounting.utils.URL;
 
@@ -48,9 +50,11 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
     private List<String> itemNames = new ArrayList<>();
     private int expandPosition = -1;
     private myviewholder mViewholder;
+    private User user;
 
-    public adapter(Context context) {
+    public adapter(Context context,User user) {
         this.context  = context;
+        this.user = user;
     }
 
     public void setExpandCollapseDataList(List<String> list) {
@@ -109,7 +113,7 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
                         temp_items.add((String)jsonArray.get(i));
                     }
                     itemNames = temp_items;
-                    ListItemAdapter listItemAdapter = new ListItemAdapter(context);
+                    ListItemAdapter listItemAdapter = new ListItemAdapter(context,category,user);
                     viewHolder.recyclerView.post(new Runnable() {
                         @Override
                         public void run() {   //线程里修改UI
@@ -150,10 +154,26 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
             }
         });
 
+        /**
+         * 添加分类
+         */
         viewHolder.category_add.setOnClickListener(new View.OnClickListener(){
+
+
+
+
             @Override
             public void onClick(View view) {
-                Log.i(MotionEffect.TAG,"点击按钮");
+                //需要参数：userId,category
+                JSONObject bodyParams = new JSONObject();
+                try {
+                    bodyParams.put("userId",user.getId());
+                    bodyParams.put("category",category);
+                    bodyParams.put("id", GenerateID.generateID());
+                    bodyParams.put("itemsName","");  //待定
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

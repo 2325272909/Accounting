@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.accounting.R;
 
 import com.example.accounting.Adapter.adapter;
+import com.example.accounting.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +24,16 @@ public class Fragment_income extends Fragment {
     private List<String> mlist = new ArrayList<>();
 
     public Fragment_income(){}
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        this.user= (User) getActivity().getIntent().getSerializableExtra("user");  //获取当前登录用户
         View view = inflater.inflate(R.layout.fragment_income, container, false);
 
-        adapter myadapter = new adapter(getActivity());
+        adapter myadapter = new adapter(getActivity(),user);
         RecyclerView rcvExpandCollapse = view.findViewById(R.id.rcv_expandcollapse);
 
         rcvExpandCollapse.setLayoutManager(new LinearLayoutManager(getActivity()));

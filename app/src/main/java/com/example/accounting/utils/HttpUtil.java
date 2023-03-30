@@ -131,4 +131,40 @@ public class HttpUtil {
         return call;
     }
 
+
+    /**
+     * 删除请求
+     * @param url
+     * @param params
+     * @return
+     */
+    public static Call deleteJsonObj(String url, JSONObject params) {
+
+        MediaType type = MediaType.parse("application/json;charset=utf-8");
+        RequestBody requestBody = RequestBody.create(type,""+ params);
+
+        Request request = new Request.Builder()
+            .url(url)
+            .delete(requestBody)
+            .build();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+            .cookieJar(new CookieJar() {
+                @Override
+                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                    cookieStore.put(url.host(),cookies);
+                }
+
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl url) {
+                    List<Cookie> cookies = cookieStore.get(url.host());
+                    return cookies != null?cookies: new ArrayList<>();
+                }
+            }).build();
+        Call call = client.newCall(request);
+        return call;
+    }
+
+    
+
 }

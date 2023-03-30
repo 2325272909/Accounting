@@ -32,7 +32,7 @@ public class Fragment_consume extends Fragment {
         View view = inflater.inflate(R.layout.fragment_consume, container, false);
         this.user= (User) getActivity().getIntent().getSerializableExtra("user");  //获取当前登录用户
 
-        adapter myadapter = new adapter(getActivity());
+        adapter myadapter = new adapter(getActivity(),user);
         RecyclerView rcvExpandCollapse = view.findViewById(R.id.consume_recycleView);
 
         rcvExpandCollapse.setLayoutManager(new LinearLayoutManager(getActivity()));
