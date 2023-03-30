@@ -1,16 +1,22 @@
 package com.example.accounting.Adapter;
 
 
+import static android.view.View.inflate;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +26,10 @@ import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.example.accounting.Activity.Activity_record_income;
+import com.example.accounting.Activity.LoginActivity;
+import com.example.accounting.Activity.MainActivity;
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
 import com.example.accounting.utils.DividerItemDecoration;
@@ -34,6 +44,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import android.app.AlertDialog;
+import android.widget.Toast;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,10 +63,14 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
     private int expandPosition = -1;
     private myviewholder mViewholder;
     private User user;
+    private View item_view;
+    private EditText itemName;
+    private AlertDialog.Builder builder;  //添加item的弹出框
 
     public adapter(Context context,User user) {
         this.context  = context;
         this.user = user;
+        builder = new AlertDialog.Builder(context);
     }
 
     public void setExpandCollapseDataList(List<String> list) {
@@ -158,22 +174,69 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
          * 添加分类
          */
         viewHolder.category_add.setOnClickListener(new View.OnClickListener(){
-
-
-
-
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
+                item_view = LayoutInflater.from(context).inflate(R.layout.input_item,null);
+                itemName = item_view.findViewById(R.id.itemName);
                 //需要参数：userId,category
-                JSONObject bodyParams = new JSONObject();
-                try {
-                    bodyParams.put("userId",user.getId());
-                    bodyParams.put("category",category);
-                    bodyParams.put("id", GenerateID.generateID());
-                    bodyParams.put("itemsName","");  //待定
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                builder.setTitle("请输入分类").setIcon(android.R.drawable.ic_dialog_info).setView(item_view)
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                        }
+                    });
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String temp_name = itemName.getText().toString();
+                        String url = URL.url()+"/user/addItem";
+                        JSONObject bodyParams = new JSONObject();
+                        try {
+                            bodyParams.put("userId",user.getId());
+                            bodyParams.put("category",category);
+                            bodyParams.put("id", GenerateID.generateID());
+                            bodyParams.put("itemName",temp_name);  //待定
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Call call1 = HttpUtil.postJsonObj(url,bodyParams);
+                        call1.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.i(TAG, "post请求失败 \n" +
+                                    "*****bodyParams里的数据***** \n"+bodyParams);
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                assert response.body() != null;
+                                String R = response.body().string();
+                                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
+
+                                try {
+                                    JSONObject toJsonObj= new JSONObject(R);
+                                    if( toJsonObj.get("code").equals(1)){
+                                        Looper.prepare();
+                                        Toast.makeText(context, "添加成功！", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
+                                    }
+                                    else {
+                                        Looper.prepare();
+                                        Toast.makeText(context, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+
+                    }
+                });
+                builder.show();
+                notifyDataSetChanged();
+
             }
         });
 

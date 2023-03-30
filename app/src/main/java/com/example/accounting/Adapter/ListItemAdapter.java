@@ -2,6 +2,7 @@ package com.example.accounting.Adapter;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
@@ -71,6 +72,7 @@ public class ListItemAdapter  extends RecyclerView.Adapter<ListItemAdapter.viewH
         holder.category_item.setText(name);  //设置按钮名称
 
         holder.category_delete.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
                 //点击删除按钮,删除分类，需要传参：用户id，catrgoty,items_name
@@ -90,7 +92,7 @@ public class ListItemAdapter  extends RecyclerView.Adapter<ListItemAdapter.viewH
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "post请求失败 \n" +
+                        Log.i(TAG, "delete请求失败 \n" +
                             "*****bodyParams里的数据***** \n"+bodyParams);
                     }
 
@@ -114,7 +116,7 @@ public class ListItemAdapter  extends RecyclerView.Adapter<ListItemAdapter.viewH
                         }
                     }
                 });
-
+              notifyDataSetChanged();
             }
         });
 
