@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <RadioGroup
-        android:id="@+id/tabs_rg"
+        android:id="@+id/contains"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -67,7 +67,7 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="696dp"
-        android:layout_above="@+id/tabs_rg"
+        android:layout_above="@+id/contains"
         tools:ignore="SpeakableTextPresentCheck" />
 
 

@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".Fragments.Fragment_total">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="60dp"
+            android:layout_height="36dp"
+            android:text="统计"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contains"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="6dp"
+        android:paddingBottom="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_spending"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center|left"
+                android:text="消费:"
+                android:textColor="#EC6D6D"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/edt_spendingMoney"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
+                android:ems="10"
+                android:hint="消费金额"
+                android:inputType="textPersonName"
+                android:textColor="#FA99B7"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_income"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
+                android:gravity="center|left"
+                android:text="收入:"
+                android:textColor="#30B115"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/edt_incomeMoney"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
+                android:ems="10"
+                android:hint="收入"
+                android:inputType="textPersonName"
+                android:textColor="#FA99B7"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="114dp"
+            android:layout_height="92dp"
+            android:text="余额:"
+            android:textColor="#303F9F"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edt_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="余额" />
+
+    </LinearLayout>
+
+</LinearLayout>

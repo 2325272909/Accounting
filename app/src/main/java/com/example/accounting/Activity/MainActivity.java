@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,6 +14,7 @@ import com.example.accounting.BlankFragment;
 import com.example.accounting.Fragments.Fragment_mine;
 
 import com.example.accounting.Fragments.Fragment_record1;
+import com.example.accounting.Fragments.Fragment_total;
 import com.example.accounting.R;
 
 import java.util.ArrayList;
@@ -39,14 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         // find view
         mViewPager = findViewById(R.id.fragment_vp);  //显示区
-        mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
+        mTabRadioGroup = findViewById(R.id.contains); //底部导航栏
         // init fragment
         mFragments = new ArrayList<>(4);   //显示内容
-        mFragments.add(BlankFragment.newInstance("流水"));
-        mFragments.add(new Fragment_record1());
-        mFragments.add(BlankFragment.newInstance("统计"));
-//        mFragments.add(BlankFragment.newInstance("我的"));
-        mFragments.add(Fragment_mine.newInstance("userName")) ;
+        mFragments.add(BlankFragment.newInstance("流水"));  //流水
+        mFragments.add(new Fragment_record1());                    //记账
+        mFragments.add(new Fragment_total());                      //统计
+        mFragments.add(Fragment_mine.newInstance("userName")) ;   //“我的”
         // init view pager
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);

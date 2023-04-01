@@ -14,10 +14,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.accounting.BlankFragment;
 import com.example.accounting.Fragments.Fragment_consume;
 import com.example.accounting.Fragments.Fragment_income;
-import com.example.accounting.Fragments.Fragment_mine;
 import com.example.accounting.R;
 import com.example.accounting.entity.User;
 
@@ -58,7 +56,7 @@ public class CategoryListActivity extends AppCompatActivity {
         // find view
         this.user =(User) getIntent().getSerializableExtra("user");
         mViewPager = findViewById(R.id.fragment);  //显示区
-        mTabRadioGroup = findViewById(R.id.tabs_rg); //底部导航栏
+        mTabRadioGroup = findViewById(R.id.contains); //底部导航栏
         exit = findViewById(R.id.exit);
         // init fragment
         mFragments = new ArrayList<>(2);   //显示内容

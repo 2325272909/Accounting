@@ -23,7 +23,6 @@ import com.example.accounting.entity.User;
  */
 public class Fragment_record1 extends Fragment {
     private Button consume,consume_OCR,income;
-    private Button btn_return,btn_add;
     private User user ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
