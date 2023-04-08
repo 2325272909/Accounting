@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSON;
+import com.example.accounting.Activity.Activity_total_consume;
 import com.example.accounting.Activity.LoginActivity;
 import com.example.accounting.Activity.MainActivity;
 import com.example.accounting.BlankFragment;
@@ -84,13 +85,24 @@ public class Fragment_total extends Fragment {
         edt_incomeMoney = getActivity().findViewById(R.id.edt_incomeMoney);
         edt_balance = getActivity().findViewById(R.id.edt_balance);
         search=getActivity().findViewById(R.id.search);
+
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
         getMonthMoney();
         calender.setOnClickListener(new OnPickMonthClickListener(getActivity(),calender));  //日期监控
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getMonthMoney();
+                getMonthMoney();   //根据日期统计
+            }
+        });
+
+        detail_spending.setOnClickListener(new View.OnClickListener() {  //转到消费详细界面
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("user",user);
+                intent.setClass(getActivity(), Activity_total_consume.class);
+                startActivity(intent);
             }
         });
 

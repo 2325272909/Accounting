@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_spendingMoney"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:background="@null"
+                android:textSize="30sp"
+                android:text="Money" />
+
+            <EditText
+                android:id="@+id/edt_spendingType"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="消费类型"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/edt_spendingTime"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:textSize="20sp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="消费日期" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="180dp"
+                android:textSize="20sp"
+                android:ems="10"
+                android:textColor="#3342A5"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/white"
+                android:text="编辑" />
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:ems="10"
+                android:textColor="#3342A5"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/white"
+                android:text="删除" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

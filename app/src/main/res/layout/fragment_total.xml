@@ -66,7 +66,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center|left"
-                android:text="总消费:"
+                android:text="月消费:"
                 android:textColor="#EC6D6D"
                 android:textSize="34sp" />
 
@@ -105,7 +105,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="40dp"
                 android:gravity="center|left"
-                android:text="总收入:"
+                android:text="月收入:"
                 android:textColor="#30B115"
                 android:textSize="34sp" />
 
@@ -143,7 +143,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="40dp"
                 android:gravity="center|left"
-                android:text="余额:"
+                android:text="差额:"
                 android:textColor="#CD0D47A1"
                 android:textSize="34sp" />
 

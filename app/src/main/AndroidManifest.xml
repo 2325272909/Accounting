@@ -55,6 +55,12 @@
         <activity
             android:name=".Activity.Activity_record_income"
             android:exported="false" />
+        <activity
+            android:name=".Activity.Activity_total_consume"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Activity_total_income"
+            android:exported="false" />
 
     </application>
 

@@ -1,10 +1,15 @@
 package com.example.accounting.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * @ClassName:Spending
@@ -14,12 +19,17 @@ import java.sql.Date;
  * Version v1.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Spending implements Serializable {
     private Long id;  //消费记录id
     private Long userId;  //关联用户id
     private BigDecimal spendingMoney; //消费金额
-    private String spending_stores; //消费商家，允许null
-    private Date spending_time;  //消费时间
-    private String spendingCredentialName;  //消费凭据
-    private String spendingTypeName;  //消费类型
+    private String spendingStores; //消费商家，允许null
+
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+//    private Date spendingTime;  //消费时间
+    private String spendingTime;
+    private String spendingCredentialName;  //消费凭据id
+    private String spendingTypeName;  //消费类型ID
 }

@@ -48,6 +48,7 @@ public class Activity_record_income extends AppCompatActivity {
     private Button btn_add,btn_return;
     AlertDialog.Builder builder_type=null;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.user = (User) getIntent().getSerializableExtra("user");
