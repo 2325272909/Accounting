@@ -14,6 +14,7 @@ import com.example.accounting.BlankFragment;
 import com.example.accounting.Fragments.Fragment_mine;
 
 import com.example.accounting.Fragments.Fragment_record1;
+import com.example.accounting.Fragments.Fragment_today;
 import com.example.accounting.Fragments.Fragment_total;
 import com.example.accounting.R;
 
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
         mTabRadioGroup = findViewById(R.id.contains); //底部导航栏
         // init fragment
         mFragments = new ArrayList<>(4);   //显示内容
-        mFragments.add(BlankFragment.newInstance("流水"));  //流水
-        mFragments.add(new Fragment_record1());                    //记账
-        mFragments.add(new Fragment_total());                      //统计
+        mFragments.add(new Fragment_today());    //流水
+        mFragments.add(new Fragment_record1());     //记账
+        mFragments.add(new Fragment_total());       //统计
         mFragments.add(Fragment_mine.newInstance("userName")) ;   //“我的”
         // init view pager
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);

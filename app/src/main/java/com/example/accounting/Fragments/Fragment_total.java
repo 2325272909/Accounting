@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSON;
 import com.example.accounting.Activity.Activity_total_consume;
+import com.example.accounting.Activity.Activity_total_income;
 import com.example.accounting.Activity.LoginActivity;
 import com.example.accounting.Activity.MainActivity;
 import com.example.accounting.BlankFragment;
@@ -102,6 +103,16 @@ public class Fragment_total extends Fragment {
                 Intent intent = new Intent();
                 intent.putExtra("user",user);
                 intent.setClass(getActivity(), Activity_total_consume.class);
+                startActivity(intent);
+            }
+        });
+
+        detail_income.setOnClickListener(new View.OnClickListener() {  //转到收入详细界面
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("user",user);
+                intent.setClass(getActivity(), Activity_total_income.class);
                 startActivity(intent);
             }
         });

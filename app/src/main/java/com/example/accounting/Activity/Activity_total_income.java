@@ -100,6 +100,19 @@ public class Activity_total_income extends AppCompatActivity {
             }
         });
 
+        /**
+         * 消费统计界面
+         */
+        btn_consume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(Activity_total_income.this, Activity_total_consume.class);
+                intent.putExtra("user",user);  //传参，要改
+                startActivity(intent);
+            }
+        });
+
 
     }
 
