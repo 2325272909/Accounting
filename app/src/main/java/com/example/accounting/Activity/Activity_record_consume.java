@@ -168,6 +168,8 @@ public class Activity_record_consume extends AppCompatActivity {
                                 temp_items1.add((String)jsonArray.get(i));
                             }
                             temp_spendingtypes = temp_items1;
+
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }

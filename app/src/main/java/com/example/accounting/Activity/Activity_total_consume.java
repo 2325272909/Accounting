@@ -71,6 +71,7 @@ public class Activity_total_consume extends AppCompatActivity {
 
         getMonthSpending();
         getMonthSpendingList();
+
         Total_consume_Adapter myadapter = new Total_consume_Adapter(Activity_total_consume.this,user);
         RecyclerView rcvExpandCollapse = findViewById(R.id.consume_recycleView);
 
