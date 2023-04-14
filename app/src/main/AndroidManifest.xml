@@ -61,7 +61,12 @@
         <activity
             android:name=".Activity.Activity_total_income"
             android:exported="false" />
-
+        <activity
+            android:name=".Activity.Activity_record_OCR"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Activity_modify_consume"
+            android:exported="false" />
     </application>
 
 </manifest>

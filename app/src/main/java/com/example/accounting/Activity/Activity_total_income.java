@@ -59,8 +59,8 @@ public class Activity_total_income extends AppCompatActivity {
         btn_incomeChart = findViewById(R.id.btn_incomeChart);
         btn_back = findViewById(R.id.btn_back);
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
-        getMonthSpending();
-        getMonthSpendingList();
+        getMonthIncome();
+        getMonthIncomeList();
         Total_income_Adapter myadapter = new Total_income_Adapter(Activity_total_income.this,user);
         RecyclerView rcvExpandCollapse = findViewById(R.id.income_recycleView);
 
@@ -73,8 +73,8 @@ public class Activity_total_income extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getMonthSpending();
-                getMonthSpendingList();
+                getMonthIncome();
+                getMonthIncomeList();
                 rcvExpandCollapse.setLayoutManager(new LinearLayoutManager(Activity_total_income.this));
                 rcvExpandCollapse.setHasFixedSize(true);
                 rcvExpandCollapse.addItemDecoration(new DividerItemDecoration(Activity_total_income.this, DividerItemDecoration.VERTICAL));
@@ -119,7 +119,7 @@ public class Activity_total_income extends AppCompatActivity {
     /**
      * 获取每月收入金额
      */
-    public void getMonthSpending(){
+    public void getMonthIncome(){
         Long userId = user.getId();
         String temp_url = URL.url();
         String url = temp_url+"/income/countIncomeYearMonthMoney";
@@ -173,7 +173,7 @@ public class Activity_total_income extends AppCompatActivity {
     /**
      * 获取每月收入记录
      */
-    public void getMonthSpendingList(){
+    public void getMonthIncomeList(){
         Long userId = user.getId();
         String temp_url = URL.url();
         String url = temp_url+"/income/listIncomeYearMonth";

@@ -54,6 +54,7 @@ public class Total_income_Adapter extends RecyclerView.Adapter<Total_income_Adap
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Toast.makeText(context,"编辑", Toast.LENGTH_SHORT).show();
             }
         });
