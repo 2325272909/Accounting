@@ -14,8 +14,8 @@
             android:id="@+id/total"
             android:layout_width="60dp"
             android:layout_height="36dp"
-            android:text="统计"
             android:layout_marginLeft="2dp"
+            android:text="统计"
             android:textColor="#111210"
             android:textSize="20sp" />
 
@@ -23,14 +23,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:background="@null">
+        android:layout_height="50dp"
+        android:background="@null"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/calender"
             android:layout_width="145dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@null"
             android:text="日期"
             android:textSize="24sp" />
@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/search"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="#00FEFEFE"
             android:text="查询"
             android:textColor="#595656"
@@ -47,118 +47,143 @@
 
     <LinearLayout
         android:id="@+id/contains"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:orientation="vertical"
-        android:paddingTop="6dp"
         android:paddingBottom="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_spending"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="87dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center|left"
                 android:text="月消费:"
                 android:textColor="#EC6D6D"
-                android:textSize="34sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/edt_spendingMoney"
-                android:layout_width="230dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="101dp"
+                android:layout_height="50dp"
                 android:hint="消费金额"
                 android:inputType="textPersonName"
                 android:textColor="#021025"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/detail_spending"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
                 android:layout_weight="1"
-                android:textSize="34sp"
-                android:text=">" />
+                android:text=">"
+                android:textSize="20sp" />
         </LinearLayout>
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_income"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="87dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="40dp"
                 android:gravity="center|left"
                 android:text="月收入:"
                 android:textColor="#30B115"
-                android:textSize="34sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/edt_incomeMoney"
-                android:layout_width="230dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:hint="收入"
+                android:layout_width="101dp"
+                android:layout_height="50dp"
                 android:ems="10"
+                android:hint="收入"
 
                 android:inputType="textPersonName"
                 android:textColor="#021025"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/detail_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_weight="1"
-                android:textSize="34sp"
-                android:text=">" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
+                android:text=">"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txt_balance"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="62dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
                 android:gravity="center|left"
                 android:text="差额:"
                 android:textColor="#CD0D47A1"
-                android:textSize="34sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/edt_balance"
-                android:layout_width="230dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="101dp"
+                android:layout_height="50dp"
                 android:ems="10"
                 android:hint="余额"
                 android:inputType="textPersonName"
                 android:textColor="#021025"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
+
         </LinearLayout>
+
     </LinearLayout>
+
+<!--    <com.example.accounting.Chart.EChartView-->
+<!--        android:id="@+id/lineChart"-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_gravity="center">-->
+<!--    </com.example.accounting.Chart.EChartView>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:nestedScrollingEnabled="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.example.accounting.Chart.EChartView
+                android:id="@+id/pieChart_consume"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                >
+
+            </com.example.accounting.Chart.EChartView>
+
+            <com.example.accounting.Chart.EChartView
+                android:id="@+id/pieChart_income"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center">
+
+            </com.example.accounting.Chart.EChartView>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
 
 </LinearLayout>

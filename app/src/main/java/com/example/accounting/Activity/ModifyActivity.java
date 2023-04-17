@@ -116,7 +116,6 @@ public class ModifyActivity extends AppCompatActivity {
                                 } else {
                                     Looper.prepare();
                                     Toast.makeText(ModifyActivity.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
                                 }
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);

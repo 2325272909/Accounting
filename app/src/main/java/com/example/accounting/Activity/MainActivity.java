@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.accounting.BlankFragment;
 import com.example.accounting.Fragments.Fragment_mine;
 
 import com.example.accounting.Fragments.Fragment_record1;

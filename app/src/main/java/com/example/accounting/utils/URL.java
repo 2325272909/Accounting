@@ -7,6 +7,6 @@ package com.example.accounting.utils;
 public class URL {
 
     public static String url(){
-        return "http://"+"10.135.142.128"+":8080";
+        return "http://"+"10.131.93.59"+":8080";
     }
 }
