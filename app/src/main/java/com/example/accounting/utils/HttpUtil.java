@@ -112,23 +112,22 @@ public class HttpUtil {
             .get()
             .build();
 
-        OkHttpClient client = new OkHttpClient.Builder()
-            .cookieJar(new CookieJar() {
-                @Override
-                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                    cookieStore.put(url.host(),cookies);
-                }
+        OkHttpClient client = new OkHttpClient();
+//            .Builder()
+//            .cookieJar(new CookieJar() {
+//                @Override
+//                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+//                    cookieStore.put(url.host(),cookies);
+//                }
+//
+//                @Override
+//                public List<Cookie> loadForRequest(HttpUrl url) {
+//                    List<Cookie> cookies = cookieStore.get(url.host());
+//                    return cookies != null?cookies: new ArrayList<>();
+//                }
+//            }).build();
 
-                @Override
-                public List<Cookie> loadForRequest(HttpUrl url) {
-                    List<Cookie> cookies = cookieStore.get(url.host());
-                    return cookies != null?cookies: new ArrayList<>();
-                }
-            }).build();
-
-        Call call = client.newCall(request);
-
-        return call;
+        return client.newCall(request);
     }
 
 

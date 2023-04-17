@@ -71,6 +71,9 @@ public class Activity_record_consume extends AppCompatActivity {
         btn_add=findViewById(R.id.btn_add);
         btn_return=findViewById(R.id.btn_return);
 
+        getSpendingCredential();
+        getSpendingTypes();
+
         /**
          * 时间选择器
          */
@@ -87,39 +90,7 @@ public class Activity_record_consume extends AppCompatActivity {
         spending_credential.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String temp_url = URL.url();
-                String url = temp_url+"/user/item/list";
-                String url1 = url+"?category="+"消费凭证";
-                Call call = HttpUtil.getJson(url1);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "post请求失败 \n" );
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        assert response.body() != null;
-                        String R = response.body().string();
-                        Log.i(TAG, "okHttpPost enqueue: \n " +
-                            "onResponse:"+ response.toString() +"\n " +
-                            "body:" +R);
-
-                        try {
-                            List<String> temp_items1 = new ArrayList<>();
-                            JSONObject toJsonObj= new JSONObject(R);
-                            JSONArray jsonArray = toJsonObj.getJSONArray("data");
-                            for(int i = 0;i<jsonArray.length();i++){
-                                temp_items1.add((String)jsonArray.get(i));
-                            }
-                            temp_spendingCredentials = temp_items1;
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
+                getSpendingCredential();
                 if(builder_credential==null){
                     builder_credential= new AlertDialog.Builder(Activity_record_consume.this);
                     builder_credential.setTitle("选择消费凭证");
@@ -142,39 +113,7 @@ public class Activity_record_consume extends AppCompatActivity {
         spending_types.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp_url = URL.url();
-                String url = temp_url+"/user/item/list";
-                String url1 = url+"?category="+"消费类型";
-                Call call = HttpUtil.getJson(url1);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "post请求失败 \n" );
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        assert response.body() != null;
-                        String R = response.body().string();
-                        Log.i(TAG, "okHttpPost enqueue: \n " +
-                            "onResponse:"+ response.toString() +"\n " +
-                            "body:" +R);
-
-                        try {
-                            List<String> temp_items1 = new ArrayList<>();
-                            JSONObject toJsonObj= new JSONObject(R);
-                            JSONArray jsonArray = toJsonObj.getJSONArray("data");
-                            for(int i = 0;i<jsonArray.length();i++){
-                                temp_items1.add((String)jsonArray.get(i));
-                            }
-                            temp_spendingtypes = temp_items1;
-
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
+                 getSpendingTypes();
 
                 if(builder_type==null){
                     builder_type = new AlertDialog.Builder(Activity_record_consume.this);
@@ -322,6 +261,76 @@ public class Activity_record_consume extends AppCompatActivity {
             , calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    public void getSpendingTypes(){
+        String temp_url = URL.url();
+        String url = temp_url+"/user/item/list";
+        String url1 = url+"?category="+"消费类型"+"&&userId="+user.getId();
+        Call call = HttpUtil.getJson(url1);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "post请求失败 \n" );
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String R = response.body().string();
+                Log.i(TAG, "okHttpPost enqueue: \n " +
+                    "onResponse:"+ response.toString() +"\n " +
+                    "body:" +R);
+
+                try {
+                    List<String> temp_items1 = new ArrayList<>();
+                    JSONObject toJsonObj= new JSONObject(R);
+                    JSONArray jsonArray = toJsonObj.getJSONArray("data");
+                    for(int i = 0;i<jsonArray.length();i++){
+                        temp_items1.add((String)jsonArray.get(i));
+                    }
+                    temp_spendingtypes = temp_items1;
+
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    public void getSpendingCredential(){
+        String temp_url = URL.url();
+        String url = temp_url+"/user/item/list";
+        String url1 = url+"?category="+"消费凭证"+"&&userId="+user.getId();
+        Call call = HttpUtil.getJson(url1);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "post请求失败 \n" );
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String R = response.body().string();
+                Log.i(TAG, "okHttpPost enqueue: \n " +
+                    "onResponse:"+ response.toString() +"\n " +
+                    "body:" +R);
+
+                try {
+                    List<String> temp_items1 = new ArrayList<>();
+                    JSONObject toJsonObj= new JSONObject(R);
+                    JSONArray jsonArray = toJsonObj.getJSONArray("data");
+                    for(int i = 0;i<jsonArray.length();i++){
+                        temp_items1.add((String)jsonArray.get(i));
+                    }
+                    temp_spendingCredentials = temp_items1;
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 
 
 }

@@ -76,15 +76,6 @@ public class Fragment_total extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
-//       lineChart = getActivity().findViewById(R.id.lineChart);
-//        lineChart.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view, url);
-//                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
-//                refreshLineChart();
-//            }
-//        });
 
         pieChart_consume = getActivity().findViewById(R.id.pieChart_consume);
 
@@ -267,104 +258,6 @@ public class Fragment_total extends Fragment {
         pieChart_income.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1_income,"收入"));
     }
 
-    /**
-     * 获取每月消费金额
-     * 目前需要改进：get请求传参问题
-     */
-    public void getMonthSpending(){
-        Long userId = user.getId();
-        String temp_url = URL.url();
-        String url = temp_url+"/spending/countSpendingYearMonthMoney";
-        Log.i(TAG,"拼接后的url地址："+url);
-        String[] temp = calender.getText().toString().split("-");
-        String year = temp[0];
-        String month = temp[1];
-
-        String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;    //////////
-        Call call =  HttpUtil.getJson(url1);/////////
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "post请求失败 \n" );
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String R = response.body().string();
-                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
-
-                try {
-                    JSONObject toJsonObj= new JSONObject(R);
-                    if( toJsonObj.get("code").equals(1)){
-                        Object obj = toJsonObj.get("data");
-                        String money = obj.toString();
-                        edt_spendingMoney.setText(money);
-                    }
-                    else {
-                        Looper.prepare();
-                        Toast.makeText(getActivity(), toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-
-
-
-    }
-
-    /**
-     * 获取每月收入金额
-     * 目前需要改进：get请求传参问题
-     */
-    public void getMonthIncome(){
-        Long userId = user.getId();
-        String temp_url = URL.url();
-        String url = temp_url+"/income/countIncomeYearMonthMoney";
-        Log.i(TAG,"拼接后的url地址："+url);
-        String[] temp = calender.getText().toString().split("-");
-        String year = temp[0];
-        String month = temp[1];
-        String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;    //////////
-        Call call =  HttpUtil.getJson(url1);/////////
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "post请求失败 \n" );
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String R = response.body().string();
-                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
-
-                try {
-                    JSONObject toJsonObj= new JSONObject(R);
-                    if( toJsonObj.get("code").equals(1)){
-                        Object obj = toJsonObj.get("data");
-                        String money = obj.toString();
-                        edt_incomeMoney.setText(money);
-                    }
-                    else {
-                        Looper.prepare();
-                        Toast.makeText(getActivity(), toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-
-
-
-    }
 
     /**
      * 统计所有（按月）

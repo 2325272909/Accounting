@@ -58,7 +58,7 @@ public class Activity_record_income extends AppCompatActivity {
         income_types=findViewById(R.id.income_types);
         btn_add=findViewById(R.id.btn_add);
         btn_return=findViewById(R.id.btn_return);
-
+        getIncomeType();
         /**
          * 时间选择器
          */
@@ -163,38 +163,7 @@ public class Activity_record_income extends AppCompatActivity {
         income_types.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp_url = URL.url();
-                String url = temp_url+"/income/typeList";
-                String url1 = url+"?userid="+ user.getId();
-                Call call = HttpUtil.getJson(url1);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "post请求失败 \n" );
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        assert response.body() != null;
-                        String R = response.body().string();
-                        Log.i(TAG, "okHttpPost enqueue: \n " +
-                            "onResponse:"+ response.toString() +"\n " +
-                            "body:" +R);
-
-                        try {
-                            List<String> temp_items1 = new ArrayList<>();
-                            JSONObject toJsonObj= new JSONObject(R);
-                            JSONArray jsonArray = toJsonObj.getJSONArray("data");
-                            for(int i = 0;i<jsonArray.length();i++){
-                                temp_items1.add((String)jsonArray.get(i));
-                            }
-                            temp_incomeType = temp_items1;
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-
+                getIncomeType();
                 if(builder_type==null){
                     builder_type = new AlertDialog.Builder(Activity_record_income.this);
                     builder_type.setTitle("选择收入类型");
@@ -208,6 +177,42 @@ public class Activity_record_income extends AppCompatActivity {
                     }
                 });
                 builder_type.create().show();
+            }
+        });
+
+
+    }
+
+    public void getIncomeType(){
+        String temp_url = URL.url();
+        String url = temp_url+"/income/typeList";
+        String url1 = url+"?userid="+ user.getId();
+        Call call = HttpUtil.getJson(url1);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "post请求失败 \n" );
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String R = response.body().string();
+                Log.i(TAG, "okHttpPost enqueue: \n " +
+                    "onResponse:"+ response.toString() +"\n " +
+                    "body:" +R);
+
+                try {
+                    List<String> temp_items1 = new ArrayList<>();
+                    JSONObject toJsonObj= new JSONObject(R);
+                    JSONArray jsonArray = toJsonObj.getJSONArray("data");
+                    for(int i = 0;i<jsonArray.length();i++){
+                        temp_items1.add((String)jsonArray.get(i));
+                    }
+                    temp_incomeType = temp_items1;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

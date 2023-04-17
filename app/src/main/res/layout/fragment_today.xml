@@ -133,8 +133,36 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_consume"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:background="#00FEFEFE"
+            android:gravity="left"
+            android:text="消费"
+            android:textColor="@color/select_color"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_income"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:background="#00FEFEFE"
+            android:gravity="left"
+            android:text="收入"
+            android:textColor="@color/select_color"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/income_recycleView"
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"

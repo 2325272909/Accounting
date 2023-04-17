@@ -54,7 +54,7 @@ public class Activity_total_consume extends AppCompatActivity {
     EditText calender,edt_spending;
     Button search,btn_income,btn_spendingChart;
     TextView btn_back;
-    List<Spending> spendingList =new ArrayList<>();
+    private List<Spending> spendingList =new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
