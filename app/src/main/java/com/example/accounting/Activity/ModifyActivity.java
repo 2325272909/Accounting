@@ -114,7 +114,6 @@ public class ModifyActivity extends AppCompatActivity {
                                     intent.putExtra("fragment_id",3);
                                     startActivity(intent);
                                 } else {
-                                    Looper.prepare();
                                     Toast.makeText(ModifyActivity.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
