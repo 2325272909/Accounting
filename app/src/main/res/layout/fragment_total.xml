@@ -68,7 +68,7 @@
                 android:textColor="#EC6D6D"
                 android:textSize="20sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_spendingMoney"
                 android:layout_width="101dp"
                 android:layout_height="50dp"
@@ -102,7 +102,7 @@
                 android:textColor="#30B115"
                 android:textSize="20sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_incomeMoney"
                 android:layout_width="101dp"
                 android:layout_height="50dp"
@@ -130,7 +130,7 @@
                 android:textColor="#CD0D47A1"
                 android:textSize="20sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_balance"
                 android:layout_width="101dp"
                 android:layout_height="50dp"

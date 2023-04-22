@@ -52,7 +52,8 @@ import okhttp3.Response;
 public class Fragment_total extends Fragment {
 
     private TextView  detail_spending,detail_income;
-    private EditText edt_spendingMoney,edt_incomeMoney,edt_balance,calender;
+    private TextView edt_spendingMoney,edt_incomeMoney,edt_balance;
+    private EditText calender;
     private User user;
     private Button search;
     List<CategoryType> data = new ArrayList<>();
@@ -291,8 +292,9 @@ public class Fragment_total extends Fragment {
                         Log.i(TAG,"obj:"+obj);
                         Map map = JSON.parseObject(obj.toString(),Map.class);
                         String income = map.get("income").toString();
+                        String spending = map.get("spending").toString();
                         edt_incomeMoney.setText(income);
-                        edt_spendingMoney.setText(map.get("spending").toString());
+                        edt_spendingMoney.setText(spending);
                         edt_balance.setText(map.get("balance").toString());
 
                     }

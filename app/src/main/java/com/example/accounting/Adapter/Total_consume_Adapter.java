@@ -13,23 +13,36 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accounting.R;
 import com.example.accounting.entity.Spending;
 import com.example.accounting.entity.User;
+import com.example.accounting.utils.HttpUtil;
+import com.example.accounting.utils.URL;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Adapter.viewHolder>{
     private List<Spending> spendingList ;
 
     private Context context;
     private User user;
+
+    private Long spendingId;
 
     public Total_consume_Adapter(Context context,User user){
         this.context = context;
@@ -53,7 +66,7 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
         holder.edt_spendingMoney.setText(String.valueOf(spendingItem.getSpendingMoney()));  //设置Money
         holder.edt_spendingType.setText(spendingItem.getSpendingTypeName());  //设置消费类型
         holder.edt_spendingTime.setText(spendingItem.getSpendingTime());  //设置消费时间
-
+        spendingId = spendingItem.getId();
         Log.i(TAG,"消费时间:"+spendingItem.getSpendingTime());
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +78,13 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"删除", Toast.LENGTH_SHORT).show();
+                Log.i(TAG,"spendingId:"+spendingId);
+                try {
+                    deleteSpending(spendingId);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                notifyDataSetChanged();
             }
         });
     }
@@ -89,5 +108,47 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
         }
     }
 
+    public void deleteSpending(Long spendingId) throws JSONException {
+
+        String temp_url = URL.url();
+        JSONObject bodyParams =  new JSONObject();
+        try {
+            bodyParams.put("spendingId",""+spendingId);
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        String url = temp_url+"/spending/delete_spending";
+
+        //   ..........待续（deletMapping对应什么请求？）
+        Call call = HttpUtil.deleteJsonObj(url,bodyParams);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(MotionEffect.TAG, "delete请求失败 \n" +
+                    "*****bodyParams里的数据***** \n"+bodyParams);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String R = response.body().string();
+                try {
+                    JSONObject toJsonObj = new JSONObject(R);
+
+                    if(response.code()==200 ){
+                        Looper.prepare();
+                        Toast.makeText(context,"删除成功", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Looper.prepare();
+                        Toast.makeText(context, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 
 }
