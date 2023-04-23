@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class Fragment_today  extends Fragment {
@@ -52,10 +54,13 @@ public class Fragment_today  extends Fragment {
     private List<String> mlist = new ArrayList<>();
     private User user;
     private RecyclerView recyclerView;
-    private Button btn_income,btn_consume;
+    private RadioButton btn_income,btn_consume;
 
     private EditText edt_income, edt_consume, edt_total_balance,total_calender;
     Button search;
+
+    Total_consume_Adapter myadapter_consume ;
+    Total_income_Adapter myadapter_income;
     private List<Spending> spendingList =new ArrayList<>();
     private List<Income> incomeList =new ArrayList<>();
     public Fragment_today() {
@@ -77,7 +82,8 @@ public class Fragment_today  extends Fragment {
         btn_consume = getActivity().findViewById(R.id.btn_consume);
 
         recyclerView = getActivity().findViewById(R.id.recycleView);
-
+        myadapter_consume =  new Total_consume_Adapter(getActivity(),user);
+        myadapter_income =new Total_income_Adapter(getActivity(),user);
         edt_income = getActivity().findViewById(R.id.edt_income);
         edt_consume = getActivity().findViewById(R.id.edt_consume);
         total_calender = getActivity().findViewById(R.id.total_calender);
@@ -86,26 +92,20 @@ public class Fragment_today  extends Fragment {
 
         total_calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date())); //设置日期
         getMonthMoney();   //提前请求
+
         getMonthSpendingList();
-        getMonthIncomeList();
+        getMonthSpendingList();   //获取两遍数据
 
-        Total_consume_Adapter myadapter_consume = new Total_consume_Adapter(getActivity(),user);
-        Total_income_Adapter myadapter_income = new Total_income_Adapter(getActivity(),user);
+        getMonthIncomeList();  //提前获取数据
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(myadapter_consume);
-        myadapter_consume.setDataList(spendingList);
+        drawSpendingList();  //渲染消费列表
+
         btn_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_consume.setChecked(false);
                 getMonthIncomeList();
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setHasFixedSize(true);
-                recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-                recyclerView.setAdapter(myadapter_income);
-                myadapter_income.setDataList(incomeList);
+                drawIncomeList();
             }
         });
 
@@ -113,20 +113,25 @@ public class Fragment_today  extends Fragment {
 
             @Override
             public void onClick(View view) {
+                btn_income.setChecked(false);
                 getMonthSpendingList();
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setHasFixedSize(true);
-                recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-                recyclerView.setAdapter(myadapter_consume);
-                myadapter_consume.setDataList(spendingList);
+                drawSpendingList();
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getMonthMoney();
+                if(btn_income.isChecked()){
+                    getMonthIncomeList();
+                    drawIncomeList();
+                }else{
+                    getMonthSpendingList();
+                    drawSpendingList();
+                }
             }
         });
+
         total_calender.setOnClickListener(new OnPickMonthClickListener(getActivity(),total_calender));  //日期监控
 
     }
@@ -278,6 +283,28 @@ public class Fragment_today  extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * 渲染消费recyclerView
+     */
+    public void drawSpendingList(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(myadapter_consume);
+        myadapter_consume.setDataList(spendingList);
+    }
+
+    /**
+     * 渲染收入recyclerView
+     */
+    public void drawIncomeList(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(myadapter_income);
+        myadapter_income.setDataList(incomeList);
     }
 
 

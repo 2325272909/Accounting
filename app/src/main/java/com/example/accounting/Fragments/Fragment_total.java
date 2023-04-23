@@ -78,11 +78,9 @@ public class Fragment_total extends Fragment {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
 
+        //找组件
         pieChart_consume = getActivity().findViewById(R.id.pieChart_consume);
-
         pieChart_income = getActivity().findViewById(R.id.pieChart_income);
-
-
         calender = getActivity().findViewById(R.id.calender);
         detail_spending = getActivity().findViewById(R.id.detail_spending);
         detail_income = getActivity().findViewById(R.id.detail_income);
@@ -91,9 +89,10 @@ public class Fragment_total extends Fragment {
         edt_balance = getActivity().findViewById(R.id.edt_balance);
         search=getActivity().findViewById(R.id.search);
 
+        //设置当前时间
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
+        getMonthMoney();  //设置金额
 
-        getMonthMoney();
         pieChart_consume.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -255,7 +254,6 @@ public class Fragment_total extends Fragment {
                 }
             }
         });
-
         pieChart_income.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1_income,"收入"));
     }
 
@@ -293,15 +291,15 @@ public class Fragment_total extends Fragment {
                         Map map = JSON.parseObject(obj.toString(),Map.class);
                         String income = map.get("income").toString();
                         String spending = map.get("spending").toString();
+                        String balance = map.get("balance").toString();
                         edt_incomeMoney.setText(income);
                         edt_spendingMoney.setText(spending);
-                        edt_balance.setText(map.get("balance").toString());
+                        edt_balance.setText(balance);
 
                     }
                     else {
                         Looper.prepare();
                         Toast.makeText(getActivity(), toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

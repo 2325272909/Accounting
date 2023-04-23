@@ -138,23 +138,28 @@
         android:layout_height="40dp"
         android:orientation="horizontal">
 
-        <Button
+        <RadioButton
             android:id="@+id/btn_consume"
             android:layout_width="76dp"
             android:layout_height="wrap_content"
             style="@style/button_consume_style"
             android:gravity="center"
+            android:button="@null"
+            android:checked="true"
             android:text="消费"
             android:layout_marginLeft="120dp"
+            android:textColor="@color/select_color"
             android:textSize="20sp" />
 
-        <Button
+        <RadioButton
             android:id="@+id/btn_income"
             android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/button_blue_style"
+            android:button="@null"
             android:text="收入"
+            android:textColor="@color/select_color"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -195,6 +200,7 @@
             android:inputType="textPersonName"
             android:text="日期" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"

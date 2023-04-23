@@ -27,32 +27,4 @@
         </shape>
     </item>
 
-    <item android:state_pressed="false">
-        <shape>
-            <solid android:color="#C4EEB4" />
-            <!-- 设置边框宽度为1dp，边框颜色 -->
-            <stroke
-                android:width="2dp"
-                android:color="#F1F3FF" />
-            <!-- 设置按钮圆角半径为25dp -->
-            <corners android:bottomLeftRadius="50dp"
-                android:topLeftRadius="50dp"/>
-        </shape>
-    </item>
-
-    <item android:state_pressed="true">
-        <shape>
-            <solid android:color="#4DA0E8"></solid>
-            <!-- 设置边框宽度为1dp，边框颜色 -->
-            <stroke
-                android:width="2dp"
-                android:color="#F1F3FF" />
-            <!-- 设置按钮圆角半径为25dp -->
-            <corners android:bottomLeftRadius="50dp"
-                android:topLeftRadius="50dp"/>
-        </shape>
-    </item>
-
-
-
 </selector>

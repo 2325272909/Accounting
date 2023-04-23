@@ -139,7 +139,7 @@ public class Activity_record_consume extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(Activity_record_consume.this, MainActivity.class);
-                intent.putExtra("fragment_id",1);
+                intent.putExtra("fragment_id",0);
                 intent.putExtra("user",user);
                 startActivity(intent);
             }
@@ -196,21 +196,18 @@ public class Activity_record_consume extends AppCompatActivity {
                                     Looper.prepare();
                                     Toast.makeText(Activity_record_consume.this,"添加成功", Toast.LENGTH_SHORT).show();
 //                                    Looper.loop();
-
                                     Intent intent = new Intent();
                                     intent.setClass(Activity_record_consume.this, MainActivity.class);
                                     intent.putExtra("user",user);
-                                    intent.putExtra("fragment_id",1);
+                                    intent.putExtra("fragment_id",0);
                                     startActivity(intent);
                                 }
                                 else if(response.code()==200&&toJsonObj.get("code").equals("0")){  //请求成功，但结果失败
                                     Looper.prepare();
                                     Toast.makeText(Activity_record_consume.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
                                 }else{
                                     Looper.prepare();  //后端出错
                                     Toast.makeText(Activity_record_consume.this, toJsonObj.get("error").toString(), Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
                                 }
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);

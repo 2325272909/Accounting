@@ -76,8 +76,10 @@
             android:layout_height="75dp"
             android:layout_gravity="bottom|center"
             android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:background="@color/purple_500"
             android:text="登录"
+            android:radius="30dp"
             android:textSize="24sp" />
 
         <Button
@@ -86,8 +88,10 @@
             android:layout_height="75dp"
             android:layout_gravity="bottom|center"
             android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:background="@color/purple_500"
             android:text="注册"
+            android:radius="30dp"
             android:textSize="24sp" />
     </LinearLayout>
 </LinearLayout>
