@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -53,7 +54,7 @@ public class Fragment_today  extends Fragment {
     private RecyclerView recyclerView;
     private Button btn_income,btn_consume;
 
-    private EditText edt_income, edt_consume, total_calender, edt_total_balance;
+    private EditText edt_income, edt_consume, edt_total_balance,total_calender;
     Button search;
     private List<Spending> spendingList =new ArrayList<>();
     private List<Income> incomeList =new ArrayList<>();
@@ -84,8 +85,9 @@ public class Fragment_today  extends Fragment {
         search = getActivity().findViewById(R.id.search);
 
         total_calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date())); //设置日期
-        getMonthMoney();
+        getMonthMoney();   //提前请求
         getMonthSpendingList();
+        getMonthIncomeList();
 
         Total_consume_Adapter myadapter_consume = new Total_consume_Adapter(getActivity(),user);
         Total_income_Adapter myadapter_income = new Total_income_Adapter(getActivity(),user);

@@ -83,6 +83,8 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="25dp"
             android:text="修改"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
             android:textSize="34sp" />
     </LinearLayout>
 

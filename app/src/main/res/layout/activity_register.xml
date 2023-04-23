@@ -113,6 +113,9 @@
             android:layout_marginLeft="80dp"
             android:text="注册"
             android:textSize="34sp"
+
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
               />
 
         <Button
@@ -123,6 +126,8 @@
             android:layout_marginLeft="40dp"
             android:text="返回"
             android:textSize="34sp"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
               />
     </LinearLayout>
 

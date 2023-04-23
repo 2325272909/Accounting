@@ -137,6 +137,8 @@
             android:layout_marginTop="25dp"
             android:layout_marginLeft="80dp"
             android:text="修改"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
             android:textSize="34sp"
             />
 
@@ -147,6 +149,8 @@
             android:layout_marginTop="25dp"
             android:layout_marginLeft="40dp"
             android:text="返回"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
             android:textSize="34sp"
             />
     </LinearLayout>

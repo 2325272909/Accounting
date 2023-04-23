@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="false">
+        <shape>
+            <solid android:color="#C4EEB4" />
+            <!-- 设置边框宽度为1dp，边框颜色 -->
+            <stroke
+                android:width="2dp"
+                android:color="#F1F3FF" />
+            <!-- 设置按钮圆角半径为25dp -->
+            <corners android:bottomRightRadius="50dp"
+                android:topRightRadius="50dp"/>
+        </shape>
+    </item>
+
+    <item android:state_checked="true">
+        <shape>
+            <solid android:color="#4DA0E8"></solid>
+            <!-- 设置边框宽度为1dp，边框颜色 -->
+            <stroke
+                android:width="2dp"
+                android:color="#F1F3FF" />
+            <!-- 设置按钮圆角半径为25dp -->
+            <corners android:bottomRightRadius="50dp"
+                android:topRightRadius="50dp"/>
+        </shape>
+    </item>
+
+
+
+</selector>
