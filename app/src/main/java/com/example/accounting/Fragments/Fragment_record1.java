@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.accounting.Activity.Activity_record_OCR;
 import com.example.accounting.Activity.Activity_record_consume;
 
 import com.example.accounting.Activity.Activity_record_income;
@@ -63,7 +64,10 @@ public class Fragment_record1 extends Fragment {
         consume_OCR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "点击OCR", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), Activity_record_OCR.class);
+                intent.putExtra("user",user);  //将登录用户的ID传递给 分类Activity,方便查询与用户关联的分类
+                startActivity(intent);
             }
         });
 

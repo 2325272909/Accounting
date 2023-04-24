@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Accounting"
 include ':app'
 
+include ':tess-two'

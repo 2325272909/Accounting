@@ -8,34 +8,48 @@
     >
 
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:text="请选择图片"
+        android:textSize="30sp"
+        android:textColor="@color/purple_500"
+        android:gravity="center"
+        />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
-            android:gravity="center|left"
-            android:text="OCR:"
-            android:textSize="20sp" />
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:text="返回"
+        />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="OCR识别"
-            android:inputType="textPersonName" />
-    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/imgv" />
 
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:id="@+id/btnOcr"
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:text="识别"
+        android:layout_marginLeft="150dp"/>
+
+
+    <TextView
+        android:id="@+id/tvshow"
+        android:layout_width="match_parent"
+        android:layout_height="348dp"
+        android:gravity="center"
+        android:text="识别内容"
+        android:textSize="24sp" />
+
 </LinearLayout>

@@ -214,6 +214,7 @@ public class Activity_modify_income extends AppCompatActivity {
                                 intent.setClass(Activity_modify_income.this, MainActivity.class);
                                 intent.putExtra("user",user);
                                 intent.putExtra("fragment_id",0);
+                                intent.putExtra("flag",1);
                                 startActivity(intent);
                             }
                             else if(response.code()==200&&toJsonObj.get("code").equals("0")){  //请求成功，但结果失败

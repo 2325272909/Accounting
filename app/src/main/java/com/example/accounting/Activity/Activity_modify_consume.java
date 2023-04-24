@@ -277,6 +277,7 @@ public class Activity_modify_consume extends AppCompatActivity {
                                 intent.setClass(Activity_modify_consume.this, MainActivity.class);
                                 intent.putExtra("user", user);  //传参，要改
                                 intent.putExtra("fragment_id",0);
+                                intent.putExtra("flag",0);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Activity_modify_consume.this, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
