@@ -137,6 +137,24 @@ public class Fragment_today  extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        int flag = getActivity().getIntent().getIntExtra("flag",0);
+        if(flag==1){
+            btn_consume.setChecked(false);
+            btn_income.setChecked(true);
+            getMonthIncomeList();
+            drawIncomeList();
+        }else if(flag==0){
+            btn_consume.setChecked(true);
+            btn_income.setChecked(false);
+            getMonthSpendingList();
+            drawSpendingList();
+        }
+        super.onResume();
+    }
+
     /**
      * 统计所有（按月）
      */
@@ -237,6 +255,8 @@ public class Fragment_today  extends Fragment {
                 }
             }
         });
+
+
     }
 
 

@@ -63,6 +63,9 @@
         <activity
             android:name=".Activity.Activity_modify_consume"
             android:exported="false" />
+        <activity
+            android:name=".Activity.Activity_modify_income"
+            android:exported="false" />
     </application>
 
 </manifest>

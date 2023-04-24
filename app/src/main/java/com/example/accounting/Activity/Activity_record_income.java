@@ -134,7 +134,8 @@ public class Activity_record_income extends AppCompatActivity {
                                     Intent intent = new Intent();
                                     intent.setClass(Activity_record_income.this, MainActivity.class);
                                     intent.putExtra("user",user);
-                                    intent.putExtra("fragment_id",1);
+                                    intent.putExtra("fragment_id",0);
+                                    intent.putExtra("flag",1); //判断，添加收入 1收入 0消费
                                     startActivity(intent);
                                 }
                                 else if(response.code()==200&&toJsonObj.get("code").equals("0")){  //请求成功，但结果失败
@@ -158,7 +159,7 @@ public class Activity_record_income extends AppCompatActivity {
         });
 
         /**
-         * 选择消费类型
+         * 选择收入类型
          */
         income_types.setOnClickListener(new View.OnClickListener() {
             @Override

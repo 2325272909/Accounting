@@ -3,6 +3,7 @@ package com.example.accounting.Adapter;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accounting.Activity.Activity_modify_consume;
+import com.example.accounting.Activity.Activity_modify_income;
 import com.example.accounting.R;
 import com.example.accounting.entity.Income;
 import com.example.accounting.entity.Spending;
@@ -67,8 +70,11 @@ public class Total_income_Adapter extends RecyclerView.Adapter<Total_income_Adap
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(context,"编辑", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(context, Activity_modify_income.class);
+                intent.putExtra("user", user);  //传参，要改
+                intent.putExtra("income",incomeItem);
+                context.startActivity(intent);
             }
         });
 
@@ -103,6 +109,7 @@ public class Total_income_Adapter extends RecyclerView.Adapter<Total_income_Adap
             edt_spendingType = itemView.findViewById(R.id.edt_spendingType);
             edt_spendingTime = itemView.findViewById(R.id.edt_spendingTime);
         }
+
     }
     public void deleteIncome(Long incomeId) throws JSONException {
 
@@ -110,7 +117,6 @@ public class Total_income_Adapter extends RecyclerView.Adapter<Total_income_Adap
         JSONObject bodyParams =  new JSONObject();
         try {
             bodyParams.put("incomeId",""+incomeId);
-
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -130,7 +136,6 @@ public class Total_income_Adapter extends RecyclerView.Adapter<Total_income_Adap
                 String R = response.body().string();
                 try {
                     JSONObject toJsonObj = new JSONObject(R);
-
                     if(response.code()==200 ){
                         Looper.prepare();
                         Toast.makeText(context,"删除成功", Toast.LENGTH_SHORT).show();

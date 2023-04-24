@@ -177,6 +177,7 @@
             android:inputType="textPersonName"
             android:background="@null"
             android:textSize="20sp"
+            android:textColor="#22A613"
             android:text="金额" />
 
         <TextView
@@ -187,6 +188,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="类型"
+            android:textColor="#22A613"
             android:textSize="20sp" />
 
         <TextView
@@ -198,6 +200,7 @@
             android:textSize="20sp"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textColor="#22A613"
             android:text="日期" />
     </LinearLayout>
 

@@ -200,6 +200,7 @@ public class Activity_record_consume extends AppCompatActivity {
                                     intent.setClass(Activity_record_consume.this, MainActivity.class);
                                     intent.putExtra("user",user);
                                     intent.putExtra("fragment_id",0);
+                                    intent.putExtra("flag",0);
                                     startActivity(intent);
                                 }
                                 else if(response.code()==200&&toJsonObj.get("code").equals("0")){  //请求成功，但结果失败

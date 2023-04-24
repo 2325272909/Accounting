@@ -51,7 +51,7 @@
             android:layout_width="240dp"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
-            android:text="添加收入"
+            android:text="录入收入记录"
             android:textSize="24sp"
             android:textColor="#888888"
             android:background="#00000000"/>

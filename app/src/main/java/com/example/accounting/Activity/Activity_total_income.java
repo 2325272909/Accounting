@@ -59,8 +59,10 @@ public class Activity_total_income extends AppCompatActivity {
         btn_incomeChart = findViewById(R.id.btn_incomeChart);
         btn_back = findViewById(R.id.btn_back);
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
+
         getMonthIncome();
         getMonthIncomeList();
+
         Total_income_Adapter myadapter = new Total_income_Adapter(Activity_total_income.this,user);
         RecyclerView rcvExpandCollapse = findViewById(R.id.income_recycleView);
 

@@ -3,6 +3,7 @@ package com.example.accounting.Adapter;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accounting.Activity.Activity_modify_consume;
 import com.example.accounting.R;
 import com.example.accounting.entity.Spending;
 import com.example.accounting.entity.User;
@@ -26,11 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.List;
-import java.util.Locale;
-import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -71,7 +70,11 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"编辑", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(context, Activity_modify_consume.class);
+                intent.putExtra("user", user);  //传参，要改
+                intent.putExtra("spending",spendingItem);
+                context.startActivity(intent);
             }
         });
 
@@ -84,7 +87,6 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                notifyDataSetChanged();
             }
         });
     }
@@ -142,7 +144,6 @@ public class Total_consume_Adapter extends RecyclerView.Adapter<Total_consume_Ad
                     } else {
                         Looper.prepare();
                         Toast.makeText(context, toJsonObj.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
