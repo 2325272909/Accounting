@@ -1,5 +1,8 @@
 package com.example.accounting.Activity;
 
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -7,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,6 +89,7 @@ public class Activity_record_OCR extends AppCompatActivity {
                         dir.mkdirs();
                     tvshow.append(DATAPATH+"\r\n");
                     mTess.init(DATAPATH, language);
+                    Log.i(TAG,"OCR识别中的Datapath:"+DATAPATH);
                     //将图片设置到mTess进行识别
                     mTess.setImage(bmp);
                     //获取识别的文字（这里会等一段时间，这里的代码是在主线程的，建议将这部分代码放到子线程）
