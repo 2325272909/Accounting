@@ -37,6 +37,8 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class Activity_total_income extends AppCompatActivity {
@@ -45,6 +47,9 @@ public class Activity_total_income extends AppCompatActivity {
     Button search,btn_consume,btn_incomeChart;
     TextView btn_back;
     List<Income> incomeList =new ArrayList<>();
+
+    private  Total_income_Adapter myadapter;
+    private  RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -58,30 +63,21 @@ public class Activity_total_income extends AppCompatActivity {
 
         btn_incomeChart = findViewById(R.id.btn_incomeChart);
         btn_back = findViewById(R.id.btn_back);
+        myadapter = new Total_income_Adapter(Activity_total_income.this,user);
+        recyclerView = findViewById(R.id.income_recycleView);
+
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
 
         getMonthIncome();
         getMonthIncomeList();
 
-        Total_income_Adapter myadapter = new Total_income_Adapter(Activity_total_income.this,user);
-        RecyclerView rcvExpandCollapse = findViewById(R.id.income_recycleView);
-
-        rcvExpandCollapse.setLayoutManager(new LinearLayoutManager(Activity_total_income.this));
-        rcvExpandCollapse.setHasFixedSize(true);
-        rcvExpandCollapse.addItemDecoration(new DividerItemDecoration(Activity_total_income.this, DividerItemDecoration.VERTICAL));
-        rcvExpandCollapse.setAdapter(myadapter);
-        myadapter.setDataList(incomeList);
         calender.setOnClickListener(new OnPickMonthClickListener(Activity_total_income.this,calender));  //日期监控
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getMonthIncome();
                 getMonthIncomeList();
-                rcvExpandCollapse.setLayoutManager(new LinearLayoutManager(Activity_total_income.this));
-                rcvExpandCollapse.setHasFixedSize(true);
-                rcvExpandCollapse.addItemDecoration(new DividerItemDecoration(Activity_total_income.this, DividerItemDecoration.VERTICAL));
-                rcvExpandCollapse.setAdapter(myadapter);
-                myadapter.setDataList(incomeList);
+
             }
         });
 
@@ -184,37 +180,57 @@ public class Activity_total_income extends AppCompatActivity {
         String year = temp[0];
         String month = temp[1];
         String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
-        Call call =  HttpUtil.getJson(url1);
-        call.enqueue(new Callback() {
-
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "post请求失败 \n");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String R = response.body().string();
-                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder().url(url1).build();
+                Call call = okHttpClient.newCall(request);
                 try {
+                    Response response = call.execute();
+                    String R= response.body().string();
                     JSONObject jsonObject= new JSONObject(R);
                     if( jsonObject.get("code").equals(1)){
                         String obj = jsonObject.getString("data");
                         Log.i(TAG,"收入信息:"+obj);
                         incomeList = JSON.parseArray(obj, Income.class);
+                        Activity_total_income.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                drawIncomeList();
+                            }
+                        });
+
                     }
                     else if(jsonObject.get("code").equals(0)){
                         Looper.prepare();
                         Log.i(TAG,"spendingList无数据");
                         incomeList = new ArrayList<>();
+                        Activity_total_income.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                drawIncomeList();
+                            }
+                        });
                         Toast.makeText(Activity_total_income.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
                     }
+                }catch (IOException e){
+                    e.printStackTrace();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }).start();
     }
+
+    /**
+     * 渲染收入recyclerView
+     */
+    public void drawIncomeList(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(Activity_total_income.this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(Activity_total_income.this, DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(myadapter);
+        myadapter.setDataList(incomeList);
+    }
+
 
 }

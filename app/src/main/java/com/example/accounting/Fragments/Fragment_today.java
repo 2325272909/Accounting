@@ -52,16 +52,15 @@ import okhttp3.Response;
 
 public class Fragment_today  extends Fragment {
 
-    private List<String> mlist = new ArrayList<>();
     private User user;
     private RecyclerView recyclerView;
     private RadioButton btn_income,btn_consume;
 
     private EditText edt_income, edt_consume, edt_total_balance,total_calender;
-    Button search;
+    private Button search;
 
-    Total_consume_Adapter myadapter_consume ;
-    Total_income_Adapter myadapter_income;
+    private Total_consume_Adapter myadapter_consume ;
+    private Total_income_Adapter myadapter_income;
     private List<Spending> spendingList =new ArrayList<>();
     private List<Income> incomeList =new ArrayList<>();
     public Fragment_today() {
@@ -92,14 +91,11 @@ public class Fragment_today  extends Fragment {
         search = getActivity().findViewById(R.id.search);
 
         total_calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date())); //设置日期
-        getMonthMoney();   //提前请求
 
-        getMonthSpendingList1();
-
-        getMonthIncomeList();  //提前获取数据
-
-        drawSpendingList();  //渲染消费列表
-
+        getMonthMoney();   //请求数据，渲染页面
+        getMonthSpendingList();
+        drawSpendingList();
+        getMonthIncomeList();
         btn_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +110,7 @@ public class Fragment_today  extends Fragment {
             @Override
             public void onClick(View view) {
                 btn_income.setChecked(false);
-                getMonthSpendingList1();
+                getMonthSpendingList();
                 drawSpendingList();
             }
         });
@@ -122,11 +118,13 @@ public class Fragment_today  extends Fragment {
             @Override
             public void onClick(View view) {
                 getMonthMoney();
+                getMonthSpendingList();
+                getMonthIncomeList();
                 if(btn_income.isChecked()){
                     getMonthIncomeList();
                     drawIncomeList();
                 }else{
-                    getMonthSpendingList1();
+                    getMonthSpendingList();
                     drawSpendingList();
                 }
             }
@@ -145,12 +143,11 @@ public class Fragment_today  extends Fragment {
             btn_consume.setChecked(false);
             btn_income.setChecked(true);
             getMonthIncomeList();
-            drawIncomeList();
         }else if(flag==0){
             btn_consume.setChecked(true);
             btn_income.setChecked(false);
             getMonthSpendingList();
-            drawSpendingList();
+
         }
         super.onResume();
     }
@@ -213,7 +210,7 @@ public class Fragment_today  extends Fragment {
     }
 
     /**
-     * 获取每月消费记录
+     * 尝试使用同步请求获取数据
      */
     public void getMonthSpendingList(){
         Long userId = user.getId();
@@ -224,55 +221,6 @@ public class Fragment_today  extends Fragment {
         String year = temp[0];
         String month = temp[1];
         String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
-
-        Call call =  HttpUtil.getJson(url1);
-        call.enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "post请求失败 \n");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String R = response.body().string();
-                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
-                try {
-                    JSONObject jsonObject= new JSONObject(R);
-                    if( jsonObject.get("code").equals(1)){
-                        String obj = jsonObject.getString("data");
-                        Log.i(TAG,"消费信息:"+obj);
-                        spendingList = JSON.parseArray(obj, Spending.class);
-                    }
-                    else if(jsonObject.get("code").equals(0)){
-                        Looper.prepare();
-                        Log.i(TAG,"spendingList无数据");
-                        spendingList = new ArrayList<>();
-                        Toast.makeText(getActivity(), jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-
-    }
-
-    /**
-     * 尝试使用同步请求获取数据
-     */
-    public void getMonthSpendingList1(){
-        Long userId = user.getId();
-        String temp_url = URL.url();
-        String url = temp_url+"/spending/listYearMonth";
-        Log.i(TAG,"拼接后的url地址："+url);
-        String[] temp = total_calender.getText().toString().split("-");
-        String year = temp[0];
-        String month = temp[1];
-        String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -311,6 +259,7 @@ public class Fragment_today  extends Fragment {
 
 
 
+
     /**
      * 获取每月收入记录
      */
@@ -323,37 +272,36 @@ public class Fragment_today  extends Fragment {
         String year = temp[0];
         String month = temp[1];
         String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
-        Call call =  HttpUtil.getJson(url1);
-        call.enqueue(new Callback() {
-
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "post请求失败 \n");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String R = response.body().string();
-                Log.i(TAG, "okHttpPost enqueue: \n " + "body:" +R);
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder().url(url1).build();
+                Call call = okHttpClient.newCall(request);
                 try {
+                    Response response = call.execute();
+                    String R= response.body().string();
                     JSONObject jsonObject= new JSONObject(R);
                     if( jsonObject.get("code").equals(1)){
                         String obj = jsonObject.getString("data");
                         Log.i(TAG,"收入信息:"+obj);
                         incomeList = JSON.parseArray(obj, Income.class);
+
                     }
                     else if(jsonObject.get("code").equals(0)){
                         Looper.prepare();
                         Log.i(TAG,"spendingList无数据");
                         incomeList = new ArrayList<>();
+
                         Toast.makeText(getActivity(), jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
                     }
+                }catch (IOException e){
+                    e.printStackTrace();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }).start();
     }
 
     /**
