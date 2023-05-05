@@ -56,11 +56,11 @@ public class Fragment_total extends Fragment {
     private EditText calender;
     private User user;
     private Button search;
-    List<CategoryType> data = new ArrayList<>();
-    List<CategoryType> data_income = new ArrayList<>();
-    List< Map<String, Object> > data1 = new ArrayList<>();
-    List< Map<String, Object> > data1_income = new ArrayList<>();
-    private EChartView lineChart,pieChart_consume,pieChart_income;
+    private List<CategoryType> data = new ArrayList<>();
+    private List<CategoryType> data_income = new ArrayList<>();
+    private List< Map<String, Object> > data1 = new ArrayList<>();
+    private List< Map<String, Object> > data1_income = new ArrayList<>();
+    private EChartView pieChart_consume,pieChart_income;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

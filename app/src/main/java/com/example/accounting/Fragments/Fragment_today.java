@@ -47,6 +47,7 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class Fragment_today  extends Fragment {
@@ -93,8 +94,7 @@ public class Fragment_today  extends Fragment {
         total_calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date())); //设置日期
         getMonthMoney();   //提前请求
 
-        getMonthSpendingList();
-        getMonthSpendingList();   //获取两遍数据
+        getMonthSpendingList1();
 
         getMonthIncomeList();  //提前获取数据
 
@@ -114,7 +114,7 @@ public class Fragment_today  extends Fragment {
             @Override
             public void onClick(View view) {
                 btn_income.setChecked(false);
-                getMonthSpendingList();
+                getMonthSpendingList1();
                 drawSpendingList();
             }
         });
@@ -126,7 +126,7 @@ public class Fragment_today  extends Fragment {
                     getMonthIncomeList();
                     drawIncomeList();
                 }else{
-                    getMonthSpendingList();
+                    getMonthSpendingList1();
                     drawSpendingList();
                 }
             }
@@ -224,6 +224,7 @@ public class Fragment_today  extends Fragment {
         String year = temp[0];
         String month = temp[1];
         String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
+
         Call call =  HttpUtil.getJson(url1);
         call.enqueue(new Callback() {
 
@@ -258,6 +259,56 @@ public class Fragment_today  extends Fragment {
 
 
     }
+
+    /**
+     * 尝试使用同步请求获取数据
+     */
+    public void getMonthSpendingList1(){
+        Long userId = user.getId();
+        String temp_url = URL.url();
+        String url = temp_url+"/spending/listYearMonth";
+        Log.i(TAG,"拼接后的url地址："+url);
+        String[] temp = total_calender.getText().toString().split("-");
+        String year = temp[0];
+        String month = temp[1];
+        String url1 = url+"?userId="+userId+"&&year="+year+"&&month="+month;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder().url(url1).build();
+                Call call = okHttpClient.newCall(request);
+                try{
+                    //同步请求要创建子线程,是因为execute()方法，会阻塞后面代码的执行
+                    //只有执行了execute方法之后,得到了服务器的响应response之后，才会执行后面的代码
+                    //所以同步请求要在子线程中完成
+                    Response response = call.execute();
+                    String R= response.body().string();
+
+                    Log.i(TAG,"response:"+R);
+                    JSONObject jsonObject= new JSONObject(R);
+                    if( jsonObject.get("code").equals(1)) {
+                        String obj = jsonObject.getString("data");
+                        Log.i(TAG, "消费信息:" + obj);
+                        spendingList = JSON.parseArray(obj, Spending.class);
+                    }else if(jsonObject.get("code").equals(0)){
+                        Looper.prepare();
+                        Log.i(TAG,"spendingList无数据");
+                        spendingList = new ArrayList<>();
+                        Toast.makeText(getActivity(), jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
+    }
+
 
 
     /**
