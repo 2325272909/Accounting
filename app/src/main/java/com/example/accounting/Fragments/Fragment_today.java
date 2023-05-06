@@ -82,6 +82,10 @@ public class Fragment_today  extends Fragment {
         btn_consume = getActivity().findViewById(R.id.btn_consume);
 
         recyclerView = getActivity().findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         myadapter_consume =  new Total_consume_Adapter(getActivity(),user);
         myadapter_income =new Total_income_Adapter(getActivity(),user);
         edt_income = getActivity().findViewById(R.id.edt_income);
@@ -94,14 +98,11 @@ public class Fragment_today  extends Fragment {
 
         getMonthMoney();   //请求数据，渲染页面
         getMonthSpendingList();
-        drawSpendingList();
-        getMonthIncomeList();
         btn_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btn_consume.setChecked(false);
                 getMonthIncomeList();
-                drawIncomeList();
             }
         });
 
@@ -111,21 +112,16 @@ public class Fragment_today  extends Fragment {
             public void onClick(View view) {
                 btn_income.setChecked(false);
                 getMonthSpendingList();
-                drawSpendingList();
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getMonthMoney();
-                getMonthSpendingList();
-                getMonthIncomeList();
                 if(btn_income.isChecked()){
                     getMonthIncomeList();
-                    drawIncomeList();
                 }else{
                     getMonthSpendingList();
-                    drawSpendingList();
                 }
             }
         });
@@ -147,7 +143,6 @@ public class Fragment_today  extends Fragment {
             btn_consume.setChecked(true);
             btn_income.setChecked(false);
             getMonthSpendingList();
-
         }
         super.onResume();
     }
@@ -191,7 +186,6 @@ public class Fragment_today  extends Fragment {
                                 edt_total_balance.setText(map.get("balance").toString());
                             }
                         });
-
 
 
                     }
@@ -240,10 +234,20 @@ public class Fragment_today  extends Fragment {
                         String obj = jsonObject.getString("data");
                         Log.i(TAG, "消费信息:" + obj);
                         spendingList = JSON.parseArray(obj, Spending.class);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                               drawSpendingList();
+                            }
+                        });
                     }else if(jsonObject.get("code").equals(0)){
                         Looper.prepare();
                         Log.i(TAG,"spendingList无数据");
                         spendingList = new ArrayList<>();
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                drawSpendingList();
+                            }
+                        });
                         Toast.makeText(getActivity(), jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
                     }
 
@@ -286,13 +290,21 @@ public class Fragment_today  extends Fragment {
                         String obj = jsonObject.getString("data");
                         Log.i(TAG,"收入信息:"+obj);
                         incomeList = JSON.parseArray(obj, Income.class);
-
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                              drawIncomeList();
+                            }
+                        });
                     }
                     else if(jsonObject.get("code").equals(0)){
                         Looper.prepare();
                         Log.i(TAG,"spendingList无数据");
                         incomeList = new ArrayList<>();
-
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                drawIncomeList();
+                            }
+                        });
                         Toast.makeText(getActivity(), jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (IOException e){
@@ -308,22 +320,18 @@ public class Fragment_today  extends Fragment {
      * 渲染消费recyclerView
      */
     public void drawSpendingList(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(myadapter_consume);
         myadapter_consume.setDataList(spendingList);
+        recyclerView.setAdapter(myadapter_consume);
+
     }
 
     /**
      * 渲染收入recyclerView
      */
     public void drawIncomeList(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(myadapter_income);
         myadapter_income.setDataList(incomeList);
+        recyclerView.setAdapter(myadapter_income);
+
     }
 
 

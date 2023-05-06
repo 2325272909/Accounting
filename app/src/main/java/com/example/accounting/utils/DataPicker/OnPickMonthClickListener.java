@@ -6,14 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
 public class OnPickMonthClickListener implements View.OnClickListener {
     private Context context;
-    private EditText editText;
+    private TextView editText;
 
-    public OnPickMonthClickListener(Context context, EditText editText) {
+    public OnPickMonthClickListener(Context context, TextView editText) {
         this.context = context;
         this.editText = editText;
         final Calendar c = Calendar.getInstance();

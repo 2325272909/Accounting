@@ -11,12 +11,13 @@
         android:background="@null"
         android:orientation="horizontal">
 
-        <EditText
+        <TextView
             android:id="@+id/calender"
             android:layout_width="145dp"
             android:layout_height="50dp"
             android:background="@null"
             android:text="日期"
+            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <Button

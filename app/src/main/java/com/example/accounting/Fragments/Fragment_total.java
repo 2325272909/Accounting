@@ -53,7 +53,7 @@ public class Fragment_total extends Fragment {
 
     private TextView  detail_spending,detail_income;
     private TextView edt_spendingMoney,edt_incomeMoney,edt_balance;
-    private EditText calender;
+    private TextView calender;
     private User user;
     private Button search;
     private List<CategoryType> data = new ArrayList<>();
@@ -74,6 +74,27 @@ public class Fragment_total extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        Log.i(TAG,"进入统计onResume函数");
+        getMonthMoney();  //设置金额
+
+        pieChart_consume.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                refreshPieChart();
+            }
+        });
+        pieChart_income.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                refreshPieChart_income();
+            }
+        });
+        super.onResume();
+    }
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
@@ -91,6 +112,7 @@ public class Fragment_total extends Fragment {
 
         //设置当前时间
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
+
         getMonthMoney();  //设置金额
 
         pieChart_consume.setWebViewClient(new WebViewClient(){
@@ -138,8 +160,6 @@ public class Fragment_total extends Fragment {
             }
         });
 
-
-
     }
 
 
@@ -185,6 +205,11 @@ public class Fragment_total extends Fragment {
                             hashMap.put("name",categoryType.getTypename());
                             data1.add(hashMap);
                         }
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                pieChart_consume.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1,"消费"));
+                            }
+                        });
                     }
                     else {
                         Looper.prepare();
@@ -197,7 +222,7 @@ public class Fragment_total extends Fragment {
             }
         });
 
-        pieChart_consume.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1,"消费"));
+//        pieChart_consume.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1,"消费"));
     }
 
 
@@ -243,6 +268,11 @@ public class Fragment_total extends Fragment {
                             hashMap.put("name",categoryType.getTypename());
                             data1_income.add(hashMap);
                         }
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                pieChart_income.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1_income,"收入"));
+                            }
+                        });
                     }
                     else {
                         Looper.prepare();
@@ -254,7 +284,7 @@ public class Fragment_total extends Fragment {
                 }
             }
         });
-        pieChart_income.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1_income,"收入"));
+//        pieChart_income.refreshEchartsWithOption(EChartOptionUtil.getPieChartOptions(data1_income,"收入"));
     }
 
 
@@ -292,9 +322,13 @@ public class Fragment_total extends Fragment {
                         String income = map.get("income").toString();
                         String spending = map.get("spending").toString();
                         String balance = map.get("balance").toString();
-                        edt_incomeMoney.setText(income);
-                        edt_spendingMoney.setText(spending);
-                        edt_balance.setText(balance);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                edt_incomeMoney.setText(income);
+                                edt_spendingMoney.setText(spending);
+                                edt_balance.setText(balance);
+                            }
+                        });
 
                     }
                     else {
