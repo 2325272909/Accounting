@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
                     Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override

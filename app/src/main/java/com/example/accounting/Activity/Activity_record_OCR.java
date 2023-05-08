@@ -10,11 +10,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,19 +31,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.fastjson.JSON;
 import com.example.accounting.R;
 
+import com.example.accounting.entity.Spending;
 import com.example.accounting.entity.User;
 import com.example.accounting.utils.ContentHelper;
+import com.example.accounting.utils.GenerateID;
+import com.example.accounting.utils.HttpUtil;
+import com.example.accounting.utils.URL;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Activity_record_OCR extends AppCompatActivity {
     private static final int LOGO_IMAGE = 1;
     private static final int BKG_IMAGE = 0;
+    private Spending spending;  //ocr识别得到的信息
     private ImageView imgv;
     private TextView tvshow;
     private Button btnocr,btn_back,selectPicture;
@@ -56,6 +78,7 @@ public class Activity_record_OCR extends AppCompatActivity {
 
     // private ImageView welcomeImg = null;
     private static final int PERMISSION_REQUEST = 1;
+
   // 检查权限,先不使用
     private void checkPermission() {
         mPermissionList.clear();
@@ -97,9 +120,8 @@ public class Activity_record_OCR extends AppCompatActivity {
         checkPermission();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_ocr);
-
-
         this.user =(User) getIntent().getSerializableExtra("user");
+
         imgv=findViewById(R.id.imgv);
         btn_back=findViewById(R.id.btn_back);
         selectPicture = findViewById(R.id.selectPicture);
@@ -131,12 +153,30 @@ public class Activity_record_OCR extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                //请求后端ocr识别，获取数据
-               Bitmap photo = Bitmap.createBitmap(imgv.getDrawingCache());
-               if(photo==null){
+                imgv.setDrawingCacheEnabled(true);
+                Bitmap temp_photo = Bitmap.createBitmap(imgv.getDrawingCache());
+                imgv.setDrawingCacheEnabled(false);
+
+                Bitmap photo = getNewBitmap(temp_photo,900,1200);
+                if(photo==null){
                    Toast.makeText(Activity_record_OCR.this, "图片为空", Toast.LENGTH_SHORT).show();
                }else{
-                   //图片二进制转换
 
+                   ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+
+                   //清空画图缓存（否则下次获取图片时还是原图片）
+                   photo.compress(Bitmap.CompressFormat.JPEG,100,bos);
+                   //获取图片的二进制
+                   byte[] compress_head_photo = bos.toByteArray();
+                   try{
+                       bos.close();
+                   }catch (Exception e){
+                       e.printStackTrace();
+                   }
+                   //对二进制数组进行编码
+                   String picture = Base64.encodeToString(compress_head_photo,Base64.DEFAULT);
+                   requestOCR(picture);
                }
 
 //                try {
@@ -211,6 +251,73 @@ public class Activity_record_OCR extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void requestOCR(String picture){
+        Long userId = user.getId();
+        String temp_url = URL.url();
+        String url = temp_url+"/ocr/ocr";
+        Log.i(TAG,"拼接后的url地址："+url);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                JSONObject pictures = new JSONObject();
+                try {
+                    pictures.put("picture",picture);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                MediaType type = MediaType.parse("application/json;charset=utf-8");
+                RequestBody requestBody = RequestBody.create(type,""+ pictures);
+
+                Request request = new Request.Builder().url(url)
+                    .post(requestBody)
+                    .build();
+                Call call = okHttpClient.newCall(request);
+                try{
+                    //同步请求要创建子线程,是因为execute()方法，会阻塞后面代码的执行
+                    //只有执行了execute方法之后,得到了服务器的响应response之后，才会执行后面的代码
+                    //所以同步请求要在子线程中完成
+                    Response response = call.execute();
+                    String R= response.body().string();
+                    Log.i(TAG,"response:"+R);
+                    JSONObject jsonObject= new JSONObject(R);
+                    if( jsonObject.get("code").equals(1)) {
+                        String obj = jsonObject.getString("data");
+                        Log.i(TAG, "消费信息:" + obj);
+//                        spending = JSON.parseObject(obj, Spending.class);
+                        //识别成功后跳转到  添加消费记录界面
+
+                    }else if(jsonObject.get("code").equals(0)){
+                        Looper.prepare();
+                        Log.i(TAG,"spendingList无数据");
+                        Toast.makeText(Activity_record_OCR.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+
+    public Bitmap getNewBitmap(Bitmap bitmap, int newWidth ,int newHeight){
+        // 获得图片的宽高.
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        // 计算缩放比例.
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数.
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片.
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+        return newBitmap;
     }
 
 }
