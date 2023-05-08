@@ -10,46 +10,56 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="请选择图片"
-        android:textSize="30sp"
-        android:textColor="@color/purple_500"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        />
+        android:text="请选择图片"
+        android:textColor="@color/purple_500"
+        android:textSize="30sp" />
+
 
     <Button
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:text="返回"
-        />
+        android:id="@+id/selectPicture"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="选择图片"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:id="@+id/imgv" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnOcr"
-        android:background="@color/purple_500"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:text="识别"
-        android:layout_marginLeft="150dp"/>
-
-
-    <TextView
-        android:id="@+id/tvshow"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="348dp"
-        android:gravity="center"
-        android:text="识别内容"
-        android:textSize="24sp" />
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnOcr"
+            android:background="@color/purple_500"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:text="识别"
+            android:layout_marginLeft="100dp"/>
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:text="返回"
+            android:layout_marginLeft="30dp"
+            />
+    </LinearLayout>
+
+
 
 </LinearLayout>
