@@ -62,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         int fragment_id = getIntent().getIntExtra("fragment_id",0);
-
         mViewPager.setCurrentItem(fragment_id);//
-
         super.onResume();
     }
     /**

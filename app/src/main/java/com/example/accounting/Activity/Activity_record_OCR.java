@@ -161,10 +161,7 @@ public class Activity_record_OCR extends AppCompatActivity {
                 if(photo==null){
                    Toast.makeText(Activity_record_OCR.this, "图片为空", Toast.LENGTH_SHORT).show();
                }else{
-
                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-
                    //清空画图缓存（否则下次获取图片时还是原图片）
                    photo.compress(Bitmap.CompressFormat.JPEG,100,bos);
                    //获取图片的二进制

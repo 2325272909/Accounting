@@ -134,14 +134,14 @@ public class adapter extends RecyclerView.Adapter<adapter.myviewholder> {
                         @Override
                         public void run() {   //线程里修改UI
 //                            ListItemAdapter listItemAdapter = new ListItemAdapter(context);
-                            listItemAdapter.setDataList(itemNames);
-                            viewHolder.recyclerView.setAdapter(listItemAdapter);
                             Log.i(TAG,"items数组"+itemNames);
                             viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView.getContext()));
                             viewHolder.recyclerView.setHasFixedSize(true);
                             viewHolder.recyclerView.setNestedScrollingEnabled(true);
                       //  viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
                             viewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(context));
+                            listItemAdapter.setDataList(itemNames);
+                            viewHolder.recyclerView.setAdapter(listItemAdapter);
 
                         }
                     });

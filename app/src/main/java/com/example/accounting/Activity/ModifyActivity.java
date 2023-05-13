@@ -58,7 +58,6 @@ public class ModifyActivity extends AppCompatActivity {
 
         //响应修改按钮事件
         btn_modify.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 String temp_url = URL.url();
@@ -84,8 +83,6 @@ public class ModifyActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                     Call call =  HttpUtil.postJsonObj(url,user);
                     call.enqueue(new Callback() {
                         @Override
@@ -93,7 +90,6 @@ public class ModifyActivity extends AppCompatActivity {
 
                             Log.i(MotionEffect.TAG, "post请求失败 \n");
                         }
-
                         @Override
                         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                             assert response.body() != null;
