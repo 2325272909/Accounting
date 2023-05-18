@@ -119,7 +119,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:gravity="center|left"
-            android:text="差额: "
+            android:text="结余: "
             android:textColor="#CD0D47A1"
             android:textSize="20sp" />
 

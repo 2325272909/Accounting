@@ -158,6 +158,7 @@ public class Activity_record_OCR extends AppCompatActivity {
                 imgv.setDrawingCacheEnabled(false);
 
                 Bitmap photo = getNewBitmap(temp_photo,900,1200);
+//                Bitmap photo = temp_photo;
                 if(photo==null){
                    Toast.makeText(Activity_record_OCR.this, "图片为空", Toast.LENGTH_SHORT).show();
                }else{

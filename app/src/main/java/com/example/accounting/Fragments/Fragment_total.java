@@ -69,8 +69,19 @@ public class Fragment_total extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_total, container, false);
+        //找组件
+        pieChart_consume = view.findViewById(R.id.pieChart_consume);
+        pieChart_income = view.findViewById(R.id.pieChart_income);
+        calender = view.findViewById(R.id.calender);
+        detail_spending = view.findViewById(R.id.detail_spending);
+        detail_income = view.findViewById(R.id.detail_income);
+        edt_spendingMoney =view.findViewById(R.id.edt_spendingMoney);
+        edt_incomeMoney = view.findViewById(R.id.edt_incomeMoney);
+        edt_balance = view.findViewById(R.id.edt_balance);
+        search=view.findViewById(R.id.search);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_total, container, false);
+        return view;
     }
 
     @Override
@@ -99,16 +110,6 @@ public class Fragment_total extends Fragment {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
 
-        //找组件
-        pieChart_consume = getActivity().findViewById(R.id.pieChart_consume);
-        pieChart_income = getActivity().findViewById(R.id.pieChart_income);
-        calender = getActivity().findViewById(R.id.calender);
-        detail_spending = getActivity().findViewById(R.id.detail_spending);
-        detail_income = getActivity().findViewById(R.id.detail_income);
-        edt_spendingMoney = getActivity().findViewById(R.id.edt_spendingMoney);
-        edt_incomeMoney = getActivity().findViewById(R.id.edt_incomeMoney);
-        edt_balance = getActivity().findViewById(R.id.edt_balance);
-        search=getActivity().findViewById(R.id.search);
 
         //设置当前时间
         calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));

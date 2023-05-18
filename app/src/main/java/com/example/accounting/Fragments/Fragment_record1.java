@@ -33,16 +33,18 @@ public class Fragment_record1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_record1, container, false);
+        View view = inflater.inflate(R.layout.fragment_record1, container, false);
+        consume= view.findViewById(R.id.consume);
+        consume_OCR= view.findViewById(R.id.consume_OCR);
+        income= view.findViewById(R.id.income);
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.user =(User) getActivity().getIntent().getSerializableExtra("user");
-        consume=getActivity().findViewById(R.id.consume);
-        consume_OCR=getActivity().findViewById(R.id.consume_OCR);
-        income=getActivity().findViewById(R.id.income);
+
 
         /**
          * 点击录入消费记录

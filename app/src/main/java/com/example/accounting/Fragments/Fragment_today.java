@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -20,11 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
-import com.example.accounting.Activity.Activity_total_consume;
-import com.example.accounting.Activity.Activity_total_income;
 import com.example.accounting.Adapter.Total_consume_Adapter;
 import com.example.accounting.Adapter.Total_income_Adapter;
-import com.example.accounting.Adapter.adapter;
 import com.example.accounting.R;
 import com.example.accounting.entity.Income;
 import com.example.accounting.entity.Spending;
@@ -42,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -71,6 +66,14 @@ public class Fragment_today  extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
+        search = view.findViewById(R.id.search);
+        btn_income = view.findViewById(R.id.btn_income);
+        btn_consume = view.findViewById(R.id.btn_consume);
+        recyclerView = view.findViewById(R.id.recycleView);
+        edt_income = view.findViewById(R.id.edt_income);
+        edt_consume = view.findViewById(R.id.edt_consume);
+        total_calender = view.findViewById(R.id.total_calender);
+        edt_total_balance = view.findViewById(R.id.edt_total_balance);
         return view;
     }
 
@@ -78,26 +81,28 @@ public class Fragment_today  extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.user = (User) getActivity().getIntent().getSerializableExtra("user");
-        btn_income = getActivity().findViewById(R.id.btn_income);
-        btn_consume = getActivity().findViewById(R.id.btn_consume);
-
-        recyclerView = getActivity().findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
         myadapter_consume =  new Total_consume_Adapter(getActivity(),user);
         myadapter_income =new Total_income_Adapter(getActivity(),user);
-        edt_income = getActivity().findViewById(R.id.edt_income);
-        edt_consume = getActivity().findViewById(R.id.edt_consume);
-        total_calender = getActivity().findViewById(R.id.total_calender);
-        edt_total_balance = getActivity().findViewById(R.id.edt_total_balance);
-        search = getActivity().findViewById(R.id.search);
 
         total_calender.setText(new SimpleDateFormat("yyyy-MM").format(new Date())); //设置日期
 
         getMonthMoney();   //请求数据，渲染页面
         getMonthSpendingList();
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getMonthMoney();
+                if(btn_income.isChecked()){
+                    getMonthIncomeList();
+                }else{
+                    getMonthSpendingList();
+                }
+            }
+        });
         btn_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,17 +119,7 @@ public class Fragment_today  extends Fragment {
                 getMonthSpendingList();
             }
         });
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getMonthMoney();
-                if(btn_income.isChecked()){
-                    getMonthIncomeList();
-                }else{
-                    getMonthSpendingList();
-                }
-            }
-        });
+
 
         total_calender.setOnClickListener(new OnPickMonthClickListener(getActivity(),total_calender));  //日期监控
 
